@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBlue50">#E3F2FD</color>
+    <color name="colorBlue100">#BBDEFB</color>
+    <color name="colorBlue200">#90CAF9</color>
+    <color name="colorBlue300">#64B5F4</color>
+    <color name="colorBlue400">#42A5F5</color>
+    <color name="colorBlue500">#2196F3</color>
+    <color name="colorBlue600">#1E88E5</color>
+    <color name="colorBlue700">#1976D2</color>
+    <color name="colorBlue800">#1565C0</color>
+    <color name="colorBlue900">#0D47A1</color>
+
+    <color name="colorABlue100">#82B1FF</color>
+    <color name="colorABlue200">#448AFF</color>
+    <color name="colorABlue400">#2979FF</color>
+    <color name="colorABlue700">#2962FF</color>
+
+    <color name="colorLightBlue50">#E1F5FE</color>
+    <color name="colorLightBlue100">#B3E5FC</color>
+    <color name="colorLightBlue200">#81D4FA</color>
+    <color name="colorLightBlue300">#4FC3F7</color>
+    <color name="colorLightBlue400">#29B6F6</color>
+    <color name="colorLightBlue500">#03A9F4</color>
+    <color name="colorLightBlue600">#039BE5</color>
+    <color name="colorLightBlue700">#0288D1</color>
+    <color name="colorLightBlue800">#0277BD</color>
+    <color name="colorLightBlue900">#01579B</color>
+
+    <color name="colorLightABlue100">#80D8FF</color>
+    <color name="colorLightABlue200">#40C4FF</color>
+    <color name="colorLightABlue400">#00B0FF</color>
+    <color name="colorLightABlue700">#0091FF</color>
+</resources>
