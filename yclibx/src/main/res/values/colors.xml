@@ -31,4 +31,6 @@
     <color name="colorLightABlue200">#40C4FF</color>
     <color name="colorLightABlue400">#00B0FF</color>
     <color name="colorLightABlue700">#0091FF</color>
+
+    <color name="gray">#373B3D</color>
 </resources>

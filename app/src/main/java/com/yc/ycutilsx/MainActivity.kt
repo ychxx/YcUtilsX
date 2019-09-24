@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         test_tv.setOnClickListener{
+            spinner.setSelectText("应该可以了吧 啊啊啊啊啊啊！！！！打的")
         }
     }
 }

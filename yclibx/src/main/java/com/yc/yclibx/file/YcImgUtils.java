@@ -127,17 +127,16 @@ public class YcImgUtils {
      * @param imgPath   图片路径
      * @param imageView
      */
+    @SuppressLint("CheckResult")
     public static void loadLocalImg(Context context, String imgPath, ImageView imageView) {
         if (YcEmpty.isEmpty(imgPath)) {
             YcLog.e("图片加载失败!图片地址为空");
         }
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(along -> {
-                    GlideApp.with(context)
-                            .load(new File(imgPath))
-                            .into(imageView);
-                });
+                .subscribe(along -> GlideApp.with(context)
+                        .load(new File(imgPath))
+                        .into(imageView));
 //        try {
 //            Bitmap bmp = null;
 //            bmp = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.fromFile(new File(imgPath)));

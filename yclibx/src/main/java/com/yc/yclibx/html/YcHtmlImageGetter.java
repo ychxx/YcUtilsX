@@ -13,7 +13,7 @@ import com.yc.yclibx.file.YcImgUtils;
 
 /**
  * 用于解决TextView展示Html时图片不显示问题
- * eg：textView.setText(Html.fromHtml(htmlData, new YcHtmlImageGetter(textView, context), null));
+ * eg：textView.setSelectText(Html.fromHtml(htmlData, new YcHtmlImageGetter(textView, context), null));
  * htmlData：要显示html字符串
  */
 
