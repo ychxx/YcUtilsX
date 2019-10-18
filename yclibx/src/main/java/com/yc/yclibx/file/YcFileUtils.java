@@ -175,7 +175,7 @@ public class YcFileUtils {
      * @return
      */
     public static String newRandomImgFileName() {
-        return Environment.getExternalStorageDirectory() + "/YcUtils/" + YcRandom.INSTANCE.getNameImgOfPNG();
+        return Environment.getExternalStorageDirectory() + "/YcUtils/" + YcRandom.getNameImgOfPNG();
     }
 
 //    /**

@@ -1,4 +1,5 @@
 package com.yc.yclibx.constant;
+
 import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
@@ -19,8 +20,9 @@ public @interface YcCameraStateEnum {
     int INIT = 0;//初始化
     int PREVIEW = 1;//预览
     int PLAYING = 2;//正在进行拍照/录像
-    int PAUSE = 3;//暂停
-    int FINISH = 4;//完成
-    int ERROR = 5;//出错
-    int RELEASE = 6;//释放资源
+    int FOCUSING = 3;//正在进行聚焦
+    int PAUSE = 4;//暂停
+    int FINISH = 5;//完成
+    int ERROR = 6;//出错
+    int RELEASE = 7;//释放资源
 }

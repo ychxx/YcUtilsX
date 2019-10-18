@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import com.yc.yclibx.comment.YcEmpty;
 
 /**
- *
+ * 下拉框
  */
 public class YcSpinnerView extends LinearLayout {
     private TextView mResultTv;

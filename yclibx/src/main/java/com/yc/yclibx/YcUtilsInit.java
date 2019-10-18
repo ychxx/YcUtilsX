@@ -1,4 +1,4 @@
-package com.yc.yclibx.widget;
+package com.yc.yclibx;
 
 import android.app.Application;
 import android.content.res.Resources;

@@ -37,7 +37,7 @@ public abstract class YcBaseRecyclerAdapter extends RecyclerView.Adapter<YcRecyc
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.yc_item_default;
+        return mLayoutResId;
     }
 
     @NotNull

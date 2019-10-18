@@ -17,9 +17,10 @@ public class YcBaseListPopupWindow implements YcOnDestroy {
     private ListAdapter mPopupWindowAdapter;
     private Context mContext;
     private boolean mIsChangeAdapter = true;
-//    public YcBaseListPopupWindow(Context context) {
-//        mContext = context;
-//    }
+
+    public YcBaseListPopupWindow(Context context) {
+        mContext = context;
+    }
 
     public YcBaseListPopupWindow(Context context, YcManage ycManage) {
         mContext = context;
@@ -43,6 +44,10 @@ public class YcBaseListPopupWindow implements YcOnDestroy {
         create();
         mListPopupWindow.setAnchorView(anchorView);//设置ListPopupWindow的锚点，即关联PopupWindow的显示位置和这个锚点
         mListPopupWindow.show();
+    }
+
+    public void dismiss() {
+        onDestroy();
     }
 
     public void setAdapter(ListAdapter listAdapter) {

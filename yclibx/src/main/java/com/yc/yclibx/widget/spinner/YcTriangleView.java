@@ -11,7 +11,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 /**
- *
+ *  圆角三角形
  */
 public class YcTriangleView extends View {
     private int mWith = 10;

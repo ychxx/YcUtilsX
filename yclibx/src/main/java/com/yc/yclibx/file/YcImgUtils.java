@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  *
@@ -54,23 +55,27 @@ public class YcImgUtils {
     /**
      * 加载网络图片(返回Bitmap)
      */
-    public static void loadNetImg(Context context, String imgUrl, final ImgLoadCall imgLoadCall) {
-        GlideApp.with(context)
-                .asBitmap()
-                .load(imgUrl)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        imgLoadCall.call(resource);
-                    }
+    public static Disposable loadNetImg(Context context, String imgUrl, final ImgLoadCall imgLoadCall) {
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> {
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(imgUrl)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    imgLoadCall.call(resource);
+                                }
+                            });
                 });
     }
 
     /**
      * 加载网络图片
      */
-    public static void loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        loadNetImg(context, imgUrl, imageView, IMG_FAIL_RELOAD_NUM);
+    public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
+        return loadNetImg(context, imgUrl, imageView, IMG_FAIL_RELOAD_NUM);
     }
 
     /**
@@ -79,9 +84,9 @@ public class YcImgUtils {
      * @param reloadNum 失败后再次加载的次数
      */
     @SuppressLint("CheckResult")
-    public static void loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
         //使用RxJava将线程切换到UI线程，防止部分手机 在加载图片失败后再次加载时出现线程相关异常
-        Observable.just(1)
+        return Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(along -> {
                     GlideApp.with(context)
@@ -128,11 +133,11 @@ public class YcImgUtils {
      * @param imageView
      */
     @SuppressLint("CheckResult")
-    public static void loadLocalImg(Context context, String imgPath, ImageView imageView) {
+    public static Disposable loadLocalImg(Context context, String imgPath, ImageView imageView) {
         if (YcEmpty.isEmpty(imgPath)) {
             YcLog.e("图片加载失败!图片地址为空");
         }
-        Observable.just(1)
+        return Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(along -> GlideApp.with(context)
                         .load(new File(imgPath))
@@ -170,33 +175,6 @@ public class YcImgUtils {
             YcLog.e("图片保存失败!");
             return false;
         }
-    }
-
-    public static Bitmap decodeSampledBitmapFromFilePath(String imagePath, int reqWidth, int reqHeight) {
-        // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imagePath, options);
-        // 调用上面定义的方法计算inSampleSize值
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        // 使用获取到的inSampleSize值再次解析图片
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(imagePath, options);
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // 源图片的高度和宽度
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-        if (height > reqHeight || width > reqWidth) {
-            // 计算出实际宽高和目标宽高的比率
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-            // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高一定都会大于等于目标的宽和高。
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-        return inSampleSize;
     }
 }
 

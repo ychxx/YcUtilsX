@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.ColorInt;
-import com.yc.yclibx.widget.YcUtilsInit;
+import com.yc.yclibx.YcUtilsInit;
 
 import java.util.Arrays;
 import java.util.List;

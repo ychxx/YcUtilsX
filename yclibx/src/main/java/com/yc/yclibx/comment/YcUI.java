@@ -5,7 +5,7 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.yc.yclibx.widget.YcUtilsInit;
+import com.yc.yclibx.YcUtilsInit;
 
 /**
  *
@@ -71,7 +71,7 @@ public class YcUI {
     /**
      * 获取屏幕高度 像素值
      */
-    public static int getScreenHegith() {
+    public static int getScreenHeight() {
         return getDisplayMetrics().heightPixels;
     }
 
