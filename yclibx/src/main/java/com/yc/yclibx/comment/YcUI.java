@@ -2,8 +2,12 @@ package com.yc.yclibx.comment;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.LayoutRes;
 
 import com.yc.yclibx.YcUtilsInit;
 
@@ -84,5 +88,8 @@ public class YcUI {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics;
+    }
+    public static View createView(Context context, @LayoutRes int layoutRes) {
+        return LayoutInflater.from(context).inflate(layoutRes, null, false);
     }
 }

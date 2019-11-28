@@ -19,7 +19,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
     private OnItemClickListener mItemClickListener;
     private OnItemLongClickListener mItemLongClickListener;
 
-    public YcRecyclerViewAdapter(@Nullable Context context) {
+    public YcRecyclerViewAdapter(@NonNull Context context) {
         super(context);
     }
 
@@ -118,6 +118,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
         return position < 0 || position >= mData.size() ? null : mData.get(position);
     }
 
+    @Override
     protected void setItemClick(YcRecyclerViewHolder ycRecyclerViewHolder) {
         if (null != mItemClickListener) {
             ycRecyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

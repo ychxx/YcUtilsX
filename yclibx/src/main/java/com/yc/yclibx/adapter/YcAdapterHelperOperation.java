@@ -67,7 +67,7 @@ public abstract class YcAdapterHelperOperation {
     @SuppressLint("SetTextI18n")
     public YcAdapterHelperOperation setText(@IdRes int viewId, CharSequence value) {
         if(TextUtils.isEmpty(value)){
-            ((TextView) getView(viewId)).setText("null");
+            ((TextView) getView(viewId)).setText("");
         }else {
             ((TextView) getView(viewId)).setText(value);
         }

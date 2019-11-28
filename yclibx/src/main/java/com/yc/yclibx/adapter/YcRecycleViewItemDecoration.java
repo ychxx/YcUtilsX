@@ -1,4 +1,4 @@
-package com.yc.yclibx.widget;
+package com.yc.yclibx.adapter;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -26,7 +26,7 @@ import com.yc.yclibx.comment.YcUI;
  *
  */
 public class YcRecycleViewItemDecoration extends RecyclerView.ItemDecoration {
-    private int mSpace = YcUI.pxToDp(80);//item间的间距
+    private int mSpace = YcUI.pxToDp(8);//item间的间距
     private int mLineColor = 0xFF009997;//0xFFE9F7FF;
     private boolean mIsHasColor = true;//是否有颜色
     private boolean mIsHasBorder = true;//边缘是否需要分割线；线性布局的上下/左右，表格布局的四周

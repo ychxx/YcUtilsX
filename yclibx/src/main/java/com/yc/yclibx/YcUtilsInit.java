@@ -2,6 +2,8 @@ package com.yc.yclibx;
 
 import android.app.Application;
 import android.content.res.Resources;
+
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import com.yc.yclibx.comment.YcLog;
 import com.yc.yclibx.file.YcImgUtils;
@@ -39,13 +41,13 @@ public class YcUtilsInit {
     /**
      * 设置加载网络图片失败时显示的图片
      */
-    public static void setLoadImgDefaultFail(@IdRes int imgIdRes) {
+    public static void setLoadImgDefaultFail(@DrawableRes int imgIdRes) {
         YcImgUtils.IMG_FAIL_ID_RES = imgIdRes;
     }
     /**
      * 设置加载网络图片时显示的图片
      */
-    public static void setLoadImgDefaultLoading(@IdRes int imgIdRes) {
+    public static void setLoadImgDefaultLoading(@DrawableRes int imgIdRes) {
         YcImgUtils.IMG_LOADING_ID_RES = imgIdRes;
     }
     public static Application getApplication(){

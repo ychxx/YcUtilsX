@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
@@ -137,6 +138,7 @@ public class YcCameraPhotoSfv extends SurfaceView implements YcOnDestroy {
         mCamera.autoFocus(new Camera.AutoFocusCallback() {
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
+                Log.e("zome", "Zome:" + camera.getParameters().getZoom());
                 if (success) {
                     try {
                         mCameraState = YcCameraStateEnum.PLAYING;
@@ -198,6 +200,7 @@ public class YcCameraPhotoSfv extends SurfaceView implements YcOnDestroy {
         }
         return true;
     }
+
     /**
      * 开关闪光灯
      **/
