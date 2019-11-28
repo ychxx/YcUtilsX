@@ -26,11 +26,11 @@ public class YcReleaseLayoutUtils {
     }
 
     public static void replace(Activity activity, @LayoutRes int releaseLayoutRes) {
-        replace(activity.findViewById(android.R.id.content), YcUI.createView(activity, releaseLayoutRes));
+        replace(activity.findViewById(android.R.id.content), YcResources.createView(activity, releaseLayoutRes));
     }
 
     public static void replace(View originalView, @LayoutRes int layoutRes) {
-        replace(originalView, YcUI.createView(originalView.getContext(), layoutRes));
+        replace(originalView, YcResources.createView(originalView.getContext(), layoutRes));
     }
 
     /**

@@ -89,7 +89,5 @@ public class YcUI {
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics;
     }
-    public static View createView(Context context, @LayoutRes int layoutRes) {
-        return LayoutInflater.from(context).inflate(layoutRes, null, false);
-    }
+
 }

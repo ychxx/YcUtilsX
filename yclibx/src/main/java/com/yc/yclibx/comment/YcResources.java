@@ -1,10 +1,15 @@
 package com.yc.yclibx.comment;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
+
 import com.yc.yclibx.YcUtilsInit;
 
 import java.util.Arrays;
@@ -80,5 +85,8 @@ public class YcResources {
      */
     public static List<String> getStringList(int resId) {
         return Arrays.asList(getResources().getStringArray(resId));
+    }
+    public static View createView(Context context, @LayoutRes int layoutRes) {
+        return LayoutInflater.from(context).inflate(layoutRes, null, false);
     }
 }
