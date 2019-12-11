@@ -46,7 +46,7 @@ public class YcUtilPermission {
     /**
      * 手机权限
      */
-    public static final String[] PERMISSION_PHONE = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG, Manifest.permission.USE_SIP, Manifest.permission.PROCESS_OUTGOING_CALLS};
+    public static final String[] PERMISSION_PHONE = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE};
     /**
      * 传感器权限
      */
@@ -59,6 +59,9 @@ public class YcUtilPermission {
      * 存储卡权限
      */
     public static final String[] PERMISSION_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    /**
+     * 蓝牙权限
+     */
     public static final String[] PERMISSION_BLT = {Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     private YcUtilPermission() {
@@ -77,6 +80,11 @@ public class YcUtilPermission {
         YcUtilPermission ycUtilPermission = new YcUtilPermission();
         ycUtilPermission.mActivity = new WeakReference<AppCompatActivity>(activity);
         return ycUtilPermission;
+    }
+
+    public YcUtilPermission addPermissions(String permissions) {
+        mRequestPermissions.add(permissions);
+        return this;
     }
 
     public YcUtilPermission addPermissions(String[] permissions) {

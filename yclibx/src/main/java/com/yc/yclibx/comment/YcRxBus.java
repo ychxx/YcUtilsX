@@ -12,13 +12,18 @@ import com.trello.rxlifecycle3.LifecycleProvider;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -130,9 +135,6 @@ public class YcRxBus implements IRxBus {
         }
     }
 
-    public void unRegister(Class sendMessage) {
-//        mBus.remove
-    }
 
     /**
      * 移除指定eventType的Sticky事件
@@ -151,4 +153,6 @@ public class YcRxBus implements IRxBus {
             mStickyEventMap.clear();
         }
     }
+
+
 }

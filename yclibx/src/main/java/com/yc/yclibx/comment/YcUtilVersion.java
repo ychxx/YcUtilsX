@@ -13,9 +13,16 @@ import android.telephony.TelephonyManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+
 import com.yc.yclibx.YcUtilsInit;
+import com.yc.yclibx.bean.YcForResultBean;
 import com.yc.yclibx.permissions.YcUtilPermission;
+import com.yc.yclibx.toactivity.YcForResult;
+
 import java.io.File;
+
+import io.reactivex.Observable;
+
 /**
  * app版本相关信息
  */
@@ -160,24 +167,27 @@ public class YcUtilVersion {
     /**
      * 安装apk
      *
-     * @param context
+     * @param activity
      * @param file
      */
-    public static void installApk(Context context, File file) {
+    public static Observable<YcForResultBean> installApk(AppCompatActivity activity, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri data;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !YcUtilPermission.newInstance((AppCompatActivity) context).isHasPermission(Manifest.permission.REQUEST_INSTALL_PACKAGES)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !YcUtilPermission.newInstance(activity).isHasPermission(Manifest.permission.REQUEST_INSTALL_PACKAGES)) {
             YcLog.e("缺少 REQUEST_INSTALL_PACKAGES 权限无法安装Apk");
         }
         // 判断版本大于等于7.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            data = FileProvider.getUriForFile(context, getPackageName(context) + ".fileprovider", file);
+            data = FileProvider.getUriForFile(activity, getPackageName() + ".fileprovider", file);
             // 给目标应用一个临时授权
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         } else {
             data = Uri.fromFile(file);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         intent.setDataAndType(data, "application/vnd.android.package-archive");
-        context.startActivity(intent);
+        YcForResult forResult = new YcForResult(activity);
+        return forResult.start(intent);
     }
 }
