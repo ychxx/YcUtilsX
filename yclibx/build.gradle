@@ -62,5 +62,10 @@ dependencies {
     /* 加载更多和刷新 */
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'  //1.0.5及以前版本的老用户升级需谨慎，API改动过大
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'  //没有使用特殊Header，可以不加这行
+
+    /* 生命周期控制 */
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
+
+    /* json解析 */
+    implementation 'com.google.code.gson:gson:2.8.6'
 }

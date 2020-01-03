@@ -2,6 +2,8 @@ package com.yc.ycutilsx
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +12,7 @@ import com.yc.yclibx.adapter.YcAdapterHelper
 import com.yc.yclibx.adapter.YcRecycleViewItemDecoration
 import com.yc.yclibx.adapter.YcRecyclerViewAdapter
 import com.yc.yclibx.comment.YcLog
+import com.yc.yclibx.file.YcImgUtils
 import com.yc.yclibx.permissions.YcUtilPermission
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
@@ -41,16 +44,30 @@ class MainActivity : AppCompatActivity() {
                 3 -> {
                     startActivity(Intent(this, TestProxyActivity::class.java))
                 }
+                4->{
+                   YcImgUtils.loadNetImg(this,"http://120.35.11.49:39090/oa/orderInstallFile/thumb/1212914668465610753.JPEG",object :YcImgUtils.ImgLoadCall2{
+                       override fun onLoadSuccess(resource: Bitmap?) {
+                         YcLog.e("onLoadSuccess")
+                       }
+
+                       override fun onLoadFailed(errorDrawabl: Drawable?) {
+                           YcLog.e("onLoadFailed")
+                       }
+
+                   })
+                }
                 else -> {
 
                 }
             }
         }
+
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
         adapter.add("rxBus")
         adapter.add("Camera")
         adapter.add("测试获取联系人信息")
         adapter.add("测试动态代理")
+        adapter.add("测试图片加载失败")
         testRecycleView.adapter = adapter
         testRecycleView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

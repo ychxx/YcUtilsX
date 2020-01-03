@@ -1,17 +1,27 @@
 package com.yc.yclibx.comment;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yc.yclibx.YcUtilsInit;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -86,6 +96,99 @@ public class YcResources {
     public static List<String> getStringList(int resId) {
         return Arrays.asList(getResources().getStringArray(resId));
     }
+
+    /**
+     * 获取assets里的图片
+     *
+     * @param imgName 图片的文件名
+     */
+    public static Bitmap getAssetsBitmap(String imgName) {
+        Bitmap image = null;
+        try {
+            InputStream is = getResources().getAssets().open(imgName);
+            image = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    /**
+     * 获取assets里的txt文件
+     *
+     * @param txtName txt文件的文件名
+     */
+    public static String getAssetsTxt(String txtName) {
+        String txt = "";
+        try {
+            InputStream inputStream = getResources().getAssets().open(txtName);
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            txt = new String(buffer, "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return txt;
+    }
+
+    /**
+     * 获取assets里的json文件
+     *
+     * @param jsonName  json文件的文件名
+     * @param className 解析用的类
+     */
+    public static <T> T getAssetsJson(String jsonName, Class<T> className) {
+        String json = "";
+        try {
+            InputStream inputStream = getResources().getAssets().open(jsonName);
+            int length = inputStream.available();
+            byte[] buffer = new byte[length];
+            inputStream.read(buffer);
+            json = new String(buffer, "UTF-8");
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Gson().fromJson(json, className);
+    }
+
+    /**
+     * 获取assets里的txt文件(外层是集合的)
+     *
+     * @param jsonName  json文件的文件名
+     * @param className 解析用的类
+     */
+    public static <T> List<T> getAssetsJsonList(String jsonName, Class<T> className) {
+        String json = "";
+        InputStream inputStream = null;
+        try {
+            inputStream = getResources().getAssets().open(jsonName);
+            int length = inputStream.available();
+            byte[] buffer = new byte[length];
+            inputStream.read(buffer);
+            json = new String(buffer, "UTF-8");
+            inputStream.close();
+            inputStream = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return new Gson().fromJson(json, new TypeToken<List<T>>() {
+        }.getType());
+    }
+
+    /**
+     * 创建view
+     */
     public static View createView(Context context, @LayoutRes int layoutRes) {
         return LayoutInflater.from(context).inflate(layoutRes, null, false);
     }

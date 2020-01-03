@@ -22,6 +22,8 @@ import com.yc.yclibx.comment.YcEmpty;
 import com.yc.yclibx.comment.YcLog;
 import com.yc.yclibx.configure.GlideApp;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,8 +50,39 @@ public class YcImgUtils {
      */
     public static int IMG_FAIL_RELOAD_NUM = 0;
 
+
     public interface ImgLoadCall {
         void call(Bitmap resource);
+    }
+
+    public interface ImgLoadCall2 {
+        void onLoadSuccess(Bitmap resource);
+
+        void onLoadFailed(Drawable errorDrawabl);
+    }
+
+    /**
+     * 加载网络图片(返回Bitmap)
+     */
+    public static Disposable loadNetImg(Context context, String imgUrl, final ImgLoadCall2 imgLoadCall) {
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> {
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(imgUrl)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    imgLoadCall.onLoadSuccess(resource);
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    imgLoadCall.onLoadFailed(errorDrawable);
+                                }
+                            });
+                });
     }
 
     /**
@@ -66,6 +99,11 @@ public class YcImgUtils {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                     imgLoadCall.call(resource);
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    super.onLoadFailed(errorDrawable);
                                 }
                             });
                 });
