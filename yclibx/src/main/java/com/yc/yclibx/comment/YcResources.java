@@ -1,12 +1,16 @@
 package com.yc.yclibx.comment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.CpuUsageInfo;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +21,11 @@ import androidx.annotation.LayoutRes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yc.yclibx.YcUtilsInit;
+import com.yc.yclibx.file.YcFileUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -184,6 +191,60 @@ public class YcResources {
         }
         return new Gson().fromJson(json, new TypeToken<List<T>>() {
         }.getType());
+    }
+
+    /**
+     * 复制assets文件夹内容
+     *
+     * @param assetsFolderPath assets文件夹路径
+     * @param saveFolderPath   保存文件夹地址
+     */
+    public static void copyAssetsFolderToSD(Context context, String assetsFolderPath, String saveFolderPath) {
+        try {
+            String[] fileNames = context.getAssets().list(assetsFolderPath);
+            if (fileNames != null && fileNames.length > 0) {
+                for (String fileName : fileNames) {
+                    copyAssetsFolderToSD(context, assetsFolderPath + File.separator + fileName, saveFolderPath + File.separator + fileName);
+                }
+            } else {
+                copyAssetsFileToSD(context, assetsFolderPath, saveFolderPath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            YcLog.e("复制assets文件夹出错：" + assetsFolderPath);
+        }
+    }
+
+    /**
+     * 复制assets文件内容
+     *
+     * @param assetsPath   assets文件路径
+     * @param saveFilePath 保存文件路径（含文件名和后缀）
+     */
+    public static void copyAssetsFileToSD(Context context, String assetsPath, String saveFilePath) {
+        try {
+            File outFile = YcFileUtils.createFile(saveFilePath);
+            InputStream is = context.getAssets().open(assetsPath);
+            FileOutputStream fos = new FileOutputStream(outFile);
+            byte[] buffer = new byte[1024];
+            int byteCount;
+            while ((byteCount = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, byteCount);
+            }
+            fos.flush();
+            is.close();
+            fos.close();
+        } catch (Exception e) {
+            YcLog.e("复制assets文件出错：" + assetsPath);
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendRefreshToSysPhone(Context context,String folderPath) {
+        Uri uri = Uri.fromFile(new File(folderPath));
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(uri);
+        context.sendBroadcast(intent);
     }
 
     /**

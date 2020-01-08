@@ -94,12 +94,45 @@ class KotlinOperator {
         return "asd"
     }
 
+    open class TestExtends {
+        open fun prin() {
+            println("testExtends")
+        }
+    }
+
+    open class TestExtends2 : TestExtends() {
+        override fun prin() {
+            println("testExtends2")
+        }
+    }
+
     companion object {
+        fun test(s: TestExtends) {
+            s.prin()
+        }
+
+        fun test2(s: TestExtends) {
+            s.prin(233)
+        }
+
+        fun TestExtends.prin(int: Int) {
+            println("TestExtends $int")
+            this.prin()
+        }
+
+        fun TestExtends2.prin(int: Int) {
+            println("TestExtends2 $int")
+            this.prin()
+        }
+
         @JvmStatic
         fun main(args: Array<String>) {
-            val kotlinOperator = KotlinOperator()
-            kotlinOperator.operationSection()
-            kotlinOperator.operationWhen(123)
+//            val kotlinOperator = KotlinOperator()
+//            kotlinOperator.operationSection()
+//            kotlinOperator.operationWhen(123)
+            /**测试扩展**/
+            test(TestExtends2())
+            test2(TestExtends2())
         }
     }
 }

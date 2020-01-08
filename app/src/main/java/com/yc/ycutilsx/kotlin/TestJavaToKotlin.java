@@ -66,4 +66,5 @@ public class TestJavaToKotlin {
             System.out.println("asd");
         }
     }
+
 }

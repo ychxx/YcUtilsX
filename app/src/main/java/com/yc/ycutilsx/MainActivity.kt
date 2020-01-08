@@ -7,11 +7,14 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.yclibx.adapter.YcAdapterHelper
 import com.yc.yclibx.adapter.YcRecycleViewItemDecoration
 import com.yc.yclibx.adapter.YcRecyclerViewAdapter
 import com.yc.yclibx.comment.YcLog
+import com.yc.yclibx.comment.YcResources
+import com.yc.yclibx.file.YcFileUtils
 import com.yc.yclibx.file.YcImgUtils
 import com.yc.yclibx.permissions.YcUtilPermission
 import com.yc.ycutilsx.proxy.TestProxyActivity
@@ -20,18 +23,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_item.*
 
 class MainActivity : AppCompatActivity() {
+    class DataBean(var content: String, var make: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val adapter = object : YcRecyclerViewAdapter<String>(this, R.layout.main_item) {
-            override fun onUpdate(helper: YcAdapterHelper?, item: String?, position: Int) {
-                helper?.setText(R.id.mainItemBtn, item)
+        val adapter = object : YcRecyclerViewAdapter<DataBean>(this, R.layout.main_item) {
+            override fun onUpdate(helper: YcAdapterHelper?, item: DataBean, position: Int) {
+                helper?.setText(R.id.mainItemBtn, item.content)
 //                helper?.setOnClickListener(R.id.mainItemBtn) { YcLog.e("asdasd") }
             }
         }
         adapter.setItemClickListener { viewHolder, view, position ->
-            when (position) {
+            when (adapter.getItem(position).make) {
                 0 -> {
                     startActivity(Intent(this, TestRxBusActivity::class.java))
                 }
@@ -44,30 +48,48 @@ class MainActivity : AppCompatActivity() {
                 3 -> {
                     startActivity(Intent(this, TestProxyActivity::class.java))
                 }
-                4->{
-                   YcImgUtils.loadNetImg(this,"http://120.35.11.49:39090/oa/orderInstallFile/thumb/1212914668465610753.JPEG",object :YcImgUtils.ImgLoadCall2{
-                       override fun onLoadSuccess(resource: Bitmap?) {
-                         YcLog.e("onLoadSuccess")
-                       }
+                4 -> {
+                    YcImgUtils.loadNetImg(
+                        this,
+                        "http://120.35.11.49:39090/oa/orderInstallFile/thumb/1212914668465610753.JPEG",
+                        object : YcImgUtils.ImgLoadCall2 {
+                            override fun onLoadSuccess(resource: Bitmap?) {
+                                YcLog.e("onLoadSuccess")
+                            }
 
-                       override fun onLoadFailed(errorDrawabl: Drawable?) {
-                           YcLog.e("onLoadFailed")
-                       }
+                            override fun onLoadFailed(errorDrawabl: Drawable?) {
+                                YcLog.e("onLoadFailed")
+                            }
 
-                   })
+                        })
+                }
+                223 -> {
+                    YcResources.copyAssetsFolderToSD(
+                        this,
+                        "temp",
+                        YcFileUtils.SD_PATH + "/小米手机图片"
+                    )
+                    YcResources.sendRefreshToSysPhone(this, YcFileUtils.SD_PATH + "/小米手机图片")
+                    Toast.makeText(this, "小米手机图片复制成功", Toast.LENGTH_LONG).show()
+                }
+                224 -> {
+                    startActivity(Intent(this, TestGetPhone2::class.java))
                 }
                 else -> {
 
                 }
             }
         }
-
+        adapter.add(DataBean("复制小米手机图片到手机本地", 223))
+        adapter.add(DataBean("查看联系人", 224))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
-        adapter.add("rxBus")
-        adapter.add("Camera")
-        adapter.add("测试获取联系人信息")
-        adapter.add("测试动态代理")
-        adapter.add("测试图片加载失败")
+//        adapter.add(DataBean("rxBus", 0))
+//        adapter.add(DataBean("Camera", 1))
+//        adapter.add(DataBean("测试获取联系人信息", 2))
+//        adapter.add(DataBean("测试动态代理", 3))
+//        adapter.add(DataBean("测试图片加载失败", 4))
+//        adapter.add(DataBean("复制assets资源到sd卡里", 5))
+//        adapter.add(DataBean("通知刷新", 6))
         testRecycleView.adapter = adapter
         testRecycleView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -80,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             .addPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .addPermissions(Manifest.permission.CALL_PHONE)
             .setSuccessCall {
-                startActivity(Intent(this, TestGetPhone2::class.java))
+                //                startActivity(Intent(this, TestGetPhone2::class.java))
             }
             .start()
     }
