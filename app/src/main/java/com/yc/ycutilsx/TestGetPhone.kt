@@ -24,11 +24,11 @@ class TestGetPhone : AppCompatActivity() {
         setContentView(R.layout.get_phone_activity)
         adapter = object : YcRecyclerViewAdapter<TestGetPhoneBean>(this, R.layout.get_phone_item) {
             override fun onUpdate(
-                helper: YcAdapterHelper?,
-                item: TestGetPhoneBean?,
+                helper: YcAdapterHelper,
+                item: TestGetPhoneBean,
                 position: Int
             ) {
-                getPhoneItemName?.text = item?.name
+                getPhoneItemName?.text = item.name
 //                getPhoneItemNum?.text = item?.num
             }
         }

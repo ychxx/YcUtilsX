@@ -18,8 +18,8 @@ class TestAdapterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_adapter)
         mAdapter = object : YcRecyclerViewAdapter<String>(this, R.layout.test_adapter_item) {
-            override fun onUpdate(helper: YcAdapterHelper?, item: String, position: Int) {
-                helper?.setText(R.id.testAdapterItemTv, "第 " + position + "行")
+            override fun onUpdate(helper: YcAdapterHelper, item: String, position: Int) {
+                helper.setText(R.id.testAdapterItemTv, "第 " + position + "行")
             }
         }
         mAdapter.setItemClickListener { _, _, position ->

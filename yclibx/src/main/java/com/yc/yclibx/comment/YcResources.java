@@ -199,20 +199,25 @@ public class YcResources {
      * @param assetsFolderPath assets文件夹路径
      * @param saveFolderPath   保存文件夹地址
      */
-    public static void copyAssetsFolderToSD(Context context, String assetsFolderPath, String saveFolderPath) {
+    public static boolean copyAssetsFolderToSD(Context context, String assetsFolderPath, String saveFolderPath) {
+        boolean isSuccess = true;
         try {
             String[] fileNames = context.getAssets().list(assetsFolderPath);
             if (fileNames != null && fileNames.length > 0) {
                 for (String fileName : fileNames) {
-                    copyAssetsFolderToSD(context, assetsFolderPath + File.separator + fileName, saveFolderPath + File.separator + fileName);
+                    if (!copyAssetsFolderToSD(context, assetsFolderPath + File.separator + fileName, saveFolderPath + File.separator + fileName)) {
+                        isSuccess = false;
+                    }
                 }
             } else {
-                copyAssetsFileToSD(context, assetsFolderPath, saveFolderPath);
+                isSuccess = copyAssetsFileToSD(context, assetsFolderPath, saveFolderPath);
             }
         } catch (IOException e) {
             e.printStackTrace();
             YcLog.e("复制assets文件夹出错：" + assetsFolderPath);
+            isSuccess = false;
         }
+        return isSuccess;
     }
 
     /**
@@ -221,7 +226,7 @@ public class YcResources {
      * @param assetsPath   assets文件路径
      * @param saveFilePath 保存文件路径（含文件名和后缀）
      */
-    public static void copyAssetsFileToSD(Context context, String assetsPath, String saveFilePath) {
+    public static boolean copyAssetsFileToSD(Context context, String assetsPath, String saveFilePath) {
         try {
             File outFile = YcFileUtils.createFile(saveFilePath);
             InputStream is = context.getAssets().open(assetsPath);
@@ -234,13 +239,15 @@ public class YcResources {
             fos.flush();
             is.close();
             fos.close();
+            return true;
         } catch (Exception e) {
             YcLog.e("复制assets文件出错：" + assetsPath);
             e.printStackTrace();
+            return false;
         }
     }
 
-    public static void sendRefreshToSysPhone(Context context,String folderPath) {
+    public static void sendRefreshToSysPhone(Context context, String folderPath) {
         Uri uri = Uri.fromFile(new File(folderPath));
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(uri);

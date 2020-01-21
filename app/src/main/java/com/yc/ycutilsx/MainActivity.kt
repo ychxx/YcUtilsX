@@ -4,8 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +31,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val adapter = object : YcRecyclerViewAdapter<DataBean>(this, R.layout.main_item) {
-            override fun onUpdate(helper: YcAdapterHelper?, item: DataBean, position: Int) {
-                helper?.setText(R.id.mainItemBtn, item.content)
+            override fun onUpdate(helper: YcAdapterHelper, item: DataBean, position: Int) {
+                helper.setText(R.id.mainItemBtn, item.content)
 //                helper?.setOnClickListener(R.id.mainItemBtn) { YcLog.e("asdasd") }
             }
         }
@@ -64,13 +66,17 @@ class MainActivity : AppCompatActivity() {
                         })
                 }
                 223 -> {
-                    YcResources.copyAssetsFolderToSD(
-                        this,
-                        "temp",
-                        YcFileUtils.SD_PATH + "/小米手机图片"
-                    )
-                    YcResources.sendRefreshToSysPhone(this, YcFileUtils.SD_PATH + "/小米手机图片")
-                    Toast.makeText(this, "小米手机图片复制成功", Toast.LENGTH_LONG).show()
+                    if (YcResources.copyAssetsFolderToSD(
+                            this,
+                            "temp",
+                            YcFileUtils.SD_PATH + "/zhaopian"
+                        )
+                    ) {
+                        YcResources.sendRefreshToSysPhone(this, YcFileUtils.SD_PATH + "/zhaopian")
+                        Toast.makeText(this, "照片复制到手机里成功", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "照片复制到手机里失败", Toast.LENGTH_LONG).show()
+                    }
                 }
                 224 -> {
                     startActivity(Intent(this, TestGetPhone2::class.java))
@@ -100,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             .addPermissions(Manifest.permission.READ_CONTACTS)
             .addPermissions(Manifest.permission.READ_PHONE_STATE)
             .addPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .addPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
             .addPermissions(Manifest.permission.CALL_PHONE)
             .setSuccessCall {
                 //                startActivity(Intent(this, TestGetPhone2::class.java))

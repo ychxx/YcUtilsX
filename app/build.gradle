@@ -19,13 +19,13 @@ android {
         app {
             versionCode 1
             versionName "1.0"
-            flavorDimensions "1"
+            flavorDimensions "default"
             applicationId "com.yc.ycutilsx"
         }
         app2 {
             versionCode 1
             versionName "1.0"
-            flavorDimensions "1"
+            flavorDimensions "default"
             applicationId "com.yc.phone"
         }
     }

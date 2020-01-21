@@ -32,7 +32,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
         onUpdate(helper, getItem(position), position);
     }
 
-    public abstract void onUpdate(YcAdapterHelper helper, T item, int position);
+    public abstract void onUpdate(@NonNull YcAdapterHelper helper, T item,@NonNull int position);
 
     @Override
     public long getItemId(int position) {
