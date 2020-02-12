@@ -7,6 +7,7 @@ import com.yc.yclibx.comment.YcLog
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 import java.util.concurrent.TimeUnit
+import kotlin.math.cos
 
 /**
  *
@@ -162,16 +163,18 @@ abstract class KotlinHelper {
         var unBoxArray2: IntArray = intArrayOf(1, 2)//未装箱 int[]
         @JvmStatic
         fun main(args: Array<String>) {
-            var list = ArrayList<String>()
-            var testArray = ArrayList<String>()
-            testArray.filter {
-                it == "21"
-            }.empty(1)
-            var list2: List<String>
-
-            list.add("")
-            list.empty(2)
-            2.testFun()
+            var a =cos(Math.PI / 180.0 * 120 / 2)
+            print(a)
+//            var list = ArrayList<String>()
+//            var testArray = ArrayList<String>()
+//            testArray.filter {
+//                it == "21"
+//            }.empty(1)
+//            var list2: List<String>
+//
+//            list.add("")
+//            list.empty(2)
+//            2.testFun()
             /**Kotlin中所有东西都是对象
              * 数字在 Java 平台是物理存储为 JVM 的原生类型，除非我们需要一个可空的引用（如 Int?）或泛型。 后者情况下会把数字装箱
              * 而且这个范围是[-128， 127]，原因是kotlin在IntegerCache.cache
@@ -194,10 +197,10 @@ abstract class KotlinHelper {
 //            varTest === varTest2//比较内存地址
 
 
-            var iTest: ITest
-            iTest = Test()
-            iTest.test()
-            iTest.testDefault()
+//            var iTest: ITest
+//            iTest = Test()
+//            iTest.test()
+//            iTest.testDefault()
         }
     }
 }

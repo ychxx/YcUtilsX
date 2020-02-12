@@ -1,6 +1,7 @@
 package com.yc.ycutilsx
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_item.*
 
 class MainActivity : AppCompatActivity() {
-    class DataBean(var content: String, var make: Int)
+    class DataBean(var content: String, var maker: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         adapter.setItemClickListener { viewHolder, view, position ->
-            when (adapter.getItem(position).make) {
+            when (adapter.getItem(position).maker) {
                 0 -> {
                     startActivity(Intent(this, TestRxBusActivity::class.java))
                 }
@@ -106,10 +107,9 @@ class MainActivity : AppCompatActivity() {
             .addPermissions(Manifest.permission.READ_CONTACTS)
             .addPermissions(Manifest.permission.READ_PHONE_STATE)
             .addPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .addPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
             .addPermissions(Manifest.permission.CALL_PHONE)
             .setSuccessCall {
-                //                startActivity(Intent(this, TestGetPhone2::class.java))
+                startActivity(Intent(this, TestGetPhone2::class.java))
             }
             .start()
     }

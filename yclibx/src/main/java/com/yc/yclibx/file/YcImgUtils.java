@@ -190,6 +190,18 @@ public class YcImgUtils {
 //        }
     }
 
+    @SuppressLint("CheckResult")
+    public static Disposable loadResIdImg(Context context, int imgResId, ImageView imageView) {
+        if (imgResId == 0) {
+            YcLog.e("图片加载失败!图片资源id为空");
+        }
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> GlideApp.with(context)
+                        .load(imgResId)
+                        .into(imageView));
+    }
+
     /**
      * bitmap转成png格式保存
      *
