@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class YcAdapter<T> extends BaseAdapter {
     private final Context mContext;
     private final int mLayoutResId;
-    private final List<T> mData;
+    protected List<T> mData;
 
     public YcAdapter(@NonNull Context context, int layoutResId) {
         this(context, layoutResId, null);
@@ -31,6 +31,11 @@ public abstract class YcAdapter<T> extends BaseAdapter {
 
     public List<T> getData() {
         return mData;
+    }
+
+    public void setData(List<T> data) {
+        if (data != null)
+            mData = data;
     }
 
     @Override

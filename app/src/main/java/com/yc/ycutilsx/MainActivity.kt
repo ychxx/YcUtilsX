@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                         })
                 }
                 5 -> {
-                    startActivity(Intent(this, TestScaleImageActivity::class.java))
+
                 }
                 223 -> {
                     if (YcResources.copyAssetsFolderToSD(
@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.add(DataBean("复制小米手机图片到手机本地", 223))
         adapter.add(DataBean("查看联系人", 224))
-        adapter.add(DataBean("测试图片的放大缩小旋转移动", 5))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

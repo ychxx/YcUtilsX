@@ -15,7 +15,7 @@ import java.util.List;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
-    private List<T> mData = new ArrayList<>();
+    protected List<T> mData = new ArrayList<>();
     private OnItemClickListener mItemClickListener;
     private OnItemLongClickListener mItemLongClickListener;
 
@@ -32,7 +32,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
         onUpdate(helper, getItem(position), position);
     }
 
-    public abstract void onUpdate(@NonNull YcAdapterHelper helper, T item,@NonNull int position);
+    public abstract void onUpdate(@NonNull YcAdapterHelper helper, T item, @NonNull int position);
 
     @Override
     public long getItemId(int position) {
@@ -41,6 +41,11 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
 
     public List<T> getData() {
         return mData;
+    }
+
+    public void setData(List<T> data) {
+        if (data != null)
+            mData = data;
     }
 
     @Override

@@ -47,9 +47,6 @@
             android:name=".TestAdapterActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".TestScaleImageActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".rxbus.TestRxBusActivity"
             android:launchMode="singleTop" />
         <activity
