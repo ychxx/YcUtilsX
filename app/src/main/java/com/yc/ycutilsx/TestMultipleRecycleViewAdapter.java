@@ -8,6 +8,8 @@ import com.yc.yclibx.adapter.YcAdapterHelper;
 import com.yc.yclibx.adapter.YcBaseMultipleRecycleViewAdapter;
 import com.yc.yclibx.adapter.YcMultiple3RecycleViewAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class TestMultipleRecycleViewAdapter extends YcMultiple3RecycleViewAdapte
     }
 
     @Override
-    public void onUpdate(YcAdapterHelper helper, int position) {
+    public void onUpdate(@NotNull YcAdapterHelper helper, int position) {
         switch (getItemType(position)) {
             case DataType.ITEM_1:
                 break;

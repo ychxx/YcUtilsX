@@ -1,8 +1,6 @@
 package com.yc.yclibx.adapter;
 
 import android.content.Context;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yc.yclibx.R;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +35,7 @@ public abstract class YcBaseRecyclerAdapter extends RecyclerView.Adapter<YcRecyc
         return mLayoutResId;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public YcRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final YcAdapterHelper helper = YcAdapterHelper.get(mContext, null, parent, viewType, -1);
@@ -49,7 +44,7 @@ public abstract class YcBaseRecyclerAdapter extends RecyclerView.Adapter<YcRecyc
         return ycRecyclerViewHolder;
     }
 
-    protected void setItemClick(YcRecyclerViewHolder ycRecyclerViewHolder){
+    protected void setItemClick(YcRecyclerViewHolder ycRecyclerViewHolder) {
 
     }
 
@@ -79,7 +74,7 @@ public abstract class YcBaseRecyclerAdapter extends RecyclerView.Adapter<YcRecyc
 
     }
 
-    public abstract void onUpdate(YcAdapterHelper helper, int position);
+    public abstract void onUpdate(@NonNull YcAdapterHelper helper, int position);
 
 
 }

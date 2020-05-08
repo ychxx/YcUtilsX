@@ -36,6 +36,7 @@ public abstract class YcAdapter<T> extends BaseAdapter {
     public void setData(List<T> data) {
         if (data != null)
             mData = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,7 +67,7 @@ public abstract class YcAdapter<T> extends BaseAdapter {
         return helper.getView();
     }
 
-    public abstract void onUpdate(YcAdapterHelper helper, T item, int position);
+    public abstract void onUpdate(@NonNull YcAdapterHelper helper, @NonNull T item, @NonNull int position);
 
     @Override
     public boolean isEnabled(int position) {

@@ -20,6 +20,7 @@ import com.yc.yclibx.comment.YcResources
 import com.yc.yclibx.file.YcFileUtils
 import com.yc.yclibx.file.YcImgUtils
 import com.yc.yclibx.permissions.YcUtilPermission
+import com.yc.ycutilsx.fragment.PageViewActivity
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -82,6 +83,9 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "照片复制到手机里失败", Toast.LENGTH_LONG).show()
                     }
                 }
+                111 -> {
+                    startActivity(Intent(this, PageViewActivity::class.java))
+                }
                 224 -> {
                     startActivity(Intent(this, TestGetPhone2::class.java))
                 }
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.add(DataBean("复制小米手机图片到手机本地", 223))
         adapter.add(DataBean("查看联系人", 224))
+        adapter.add(DataBean("viewPager动态增删", 111))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

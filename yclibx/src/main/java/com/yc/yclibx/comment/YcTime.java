@@ -23,6 +23,18 @@ public class YcTime {
     public final static String FORMAT_TIME_YEAR = "yyyy";
     public final static String FORMAT_TIME_MONTH = "yyyy-MM";
     public final static String FORMAT_TIME_SECOND = "yyyy-MM-dd HH:mm:ss";
+    public final static String FORMAT_TIME_SECOND_WEEK = "yyyy-MM-dd E HH:mm:ss";//E代表星期，会根据时区显示中文或英文
+
+    /**
+     * 获取系统当前时间
+     */
+    public static String getCurrentTime() {
+        return getCurrentTime(FORMAT_TIME);
+    }
+
+    public static String getCurrentTime(String formatTime) {
+        return calendarToString(Calendar.getInstance(), formatTime);
+    }
 
     /**
      * 将Date类型格式化成String yyyy-MM-dd

@@ -54,10 +54,8 @@ class TestGetPhone : AppCompatActivity() {
             val item = TestGetPhoneBean()
             val contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
             //获取联系人姓名
-            val name =
-                cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-            val name2 =
-                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            val name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+            val name2 = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
             item.name = name
             val phoneCursor = contentResolver.query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,

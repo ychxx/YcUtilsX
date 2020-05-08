@@ -28,7 +28,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
     }
 
     @Override
-    public void onUpdate(YcAdapterHelper helper, int position) {
+    public void onUpdate(@NonNull YcAdapterHelper helper, int position) {
         onUpdate(helper, getItem(position), position);
     }
 
@@ -46,6 +46,7 @@ public abstract class YcRecyclerViewAdapter<T> extends YcBaseRecyclerAdapter {
     public void setData(List<T> data) {
         if (data != null)
             mData = data;
+        notifyDataSetChanged();
     }
 
     @Override

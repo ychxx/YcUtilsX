@@ -15,8 +15,13 @@ public class YcLoop {
     private int mPeriodTime = 200;//间隔时间
     private Disposable mDisposable;
     private ExecuteCall mExecuteCall;
+    private boolean mIsLoop = false;//是否一直执行回调
 
     public YcLoop() {
+    }
+
+    public void setLoop(boolean loop) {
+        mIsLoop = loop;
     }
 
     /**
@@ -53,7 +58,9 @@ public class YcLoop {
                     }
                 })
                 .subscribe(aLong -> {
-                    mDisposable.dispose();
+                    if (!mIsLoop) {
+                        mDisposable.dispose();
+                    }
                     if (mExecuteCall != null) {
                         mExecuteCall.execute();
                     }
