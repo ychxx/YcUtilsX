@@ -201,7 +201,17 @@ public class YcImgUtils {
                         .load(imgResId)
                         .into(imageView));
     }
-
+    @SuppressLint("CheckResult")
+    public static Disposable loadUrlImg(Context context, String imgUrl, ImageView imageView) {
+        if (YcEmpty.isEmpty(imgUrl)) {
+            YcLog.e("图片加载失败!图片的url为空");
+        }
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> GlideApp.with(context)
+                        .load(imgUrl)
+                        .into(imageView));
+    }
     /**
      * bitmap转成png格式保存
      *
