@@ -147,7 +147,7 @@ public class YcUtilPermission {
         rxPermissions.requestEach(mRequestPermissions.toArray(new String[0]))
                 .subscribe(new Consumer<Permission>() {
                     @Override
-                    public void accept(Permission permission) {
+                    public void accept(Permission permission) throws YcException {
                         if (permission.granted) {
                             // 用户已经同意该权限
                             Log.i("YcUtilPermission", "" + permission.name + "用户已经同意该权限");
@@ -194,11 +194,15 @@ public class YcUtilPermission {
     }
 
     public interface SuccessCall {
-        void onCall();
+        void onCall() throws YcException;
+
+        ;
     }
 
     public interface SuccessCall2 {
-        void onCall(List<String> permissionSuccess);
+        void onCall(List<String> permissionSuccess) throws YcException;
+
+        ;
     }
 
     public interface FailCall2 {
