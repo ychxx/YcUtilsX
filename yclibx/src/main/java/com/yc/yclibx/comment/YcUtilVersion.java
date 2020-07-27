@@ -180,6 +180,7 @@ public class YcUtilVersion {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             data = FileProvider.getUriForFile(activity, getPackageName() + ".fileprovider", file);
             // 给目标应用一个临时授权
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         } else {

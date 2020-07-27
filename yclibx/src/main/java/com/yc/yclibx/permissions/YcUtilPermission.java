@@ -75,6 +75,9 @@ public class YcUtilPermission {
     private SuccessCall mSuccessCall;
     private FailCall mFailCall;
     private NeverAskAgainCall mNeverAskAgainCall;
+    private SuccessCall2 mSuccessCall2;
+    private FailCall2 mFailCall2;
+    private NeverAskAgainCall2 mNeverAskAgainCall2;
 
     public static YcUtilPermission newInstance(AppCompatActivity activity) {
         YcUtilPermission ycUtilPermission = new YcUtilPermission();
@@ -97,13 +100,28 @@ public class YcUtilPermission {
         return this;
     }
 
+    public YcUtilPermission setSuccessCall2(SuccessCall2 successCall2) {
+        mSuccessCall2 = successCall2;
+        return this;
+    }
+
     public YcUtilPermission setFailCall(FailCall failCall) {
         mFailCall = failCall;
         return this;
     }
 
+    public YcUtilPermission setFailCall2(FailCall2 failCall2) {
+        mFailCall2 = failCall2;
+        return this;
+    }
+
     public YcUtilPermission setNeverAskAgainCall(NeverAskAgainCall neverAskAgainCall) {
         mNeverAskAgainCall = neverAskAgainCall;
+        return this;
+    }
+
+    public YcUtilPermission setNeverAskAgainCall2(NeverAskAgainCall2 neverAskAgainCall2) {
+        mNeverAskAgainCall2 = neverAskAgainCall2;
         return this;
     }
 
@@ -129,7 +147,7 @@ public class YcUtilPermission {
         rxPermissions.requestEach(mRequestPermissions.toArray(new String[0]))
                 .subscribe(new Consumer<Permission>() {
                     @Override
-                    public void accept(Permission permission) throws Exception {
+                    public void accept(Permission permission) {
                         if (permission.granted) {
                             // 用户已经同意该权限
                             Log.i("YcUtilPermission", "" + permission.name + "用户已经同意该权限");
@@ -148,12 +166,27 @@ public class YcUtilPermission {
                         int requestSize = mRequestPermissions.size();
                         int neverAskAgain = mNeverAskAgainPermissions.size();
                         if (neverAskAgain + failSize + successSize >= requestSize) {
-                            if (neverAskAgain > 0 && mNeverAskAgainCall != null) {
-                                mNeverAskAgainCall.onCall();
-                            } else if (failSize > 0 && mFailCall != null) {
-                                mFailCall.onCall();
-                            } else if (mSuccessCall != null) {
-                                mSuccessCall.onCall();
+                            if (neverAskAgain > 0) {
+                                if (mNeverAskAgainCall != null) {
+                                    mNeverAskAgainCall.onCall();
+                                }
+                                if (mNeverAskAgainCall2 != null) {
+                                    mNeverAskAgainCall2.onCall(mNeverAskAgainPermissions);
+                                }
+                            } else if (failSize > 0) {
+                                if (mFailCall != null) {
+                                    mFailCall.onCall();
+                                }
+                                if (mFailCall2 != null) {
+                                    mFailCall2.onCall(mFailPermissions);
+                                }
+                            } else {
+                                if (mSuccessCall != null) {
+                                    mSuccessCall.onCall();
+                                }
+                                if (mSuccessCall2 != null) {
+                                    mSuccessCall2.onCall(mSuccessPermissions);
+                                }
                             }
                         }
                     }
@@ -161,11 +194,23 @@ public class YcUtilPermission {
     }
 
     public interface SuccessCall {
-        void onCall() throws YcException;
+        void onCall();
+    }
+
+    public interface SuccessCall2 {
+        void onCall(List<String> permissionSuccess);
+    }
+
+    public interface FailCall2 {
+        void onCall(List<String> permissionFail);
     }
 
     public interface FailCall {
         void onCall();
+    }
+
+    public interface NeverAskAgainCall2 {
+        void onCall(List<String> permissionNeverAskAgain);
     }
 
     public interface NeverAskAgainCall {
