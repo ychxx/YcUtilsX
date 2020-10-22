@@ -21,6 +21,7 @@ import com.yc.yclibx.file.YcFileUtils
 import com.yc.yclibx.file.YcImgUtils
 import com.yc.yclibx.permissions.YcUtilPermission
 import com.yc.ycutilsx.fragment.PageViewActivity
+import com.yc.ycutilsx.mp.MPActivity
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -89,6 +90,9 @@ class MainActivity : AppCompatActivity() {
                 224 -> {
                     startActivity(Intent(this, TestGetPhone2::class.java))
                 }
+                231 -> {
+                    startActivity(Intent(this, MPActivity::class.java))
+                }
                 else -> {
 
                 }
@@ -97,6 +101,8 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("复制小米手机图片到手机本地", 223))
         adapter.add(DataBean("查看联系人", 224))
         adapter.add(DataBean("viewPager动态增删", 111))
+        adapter.add(DataBean("MP图表", 231))
+
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

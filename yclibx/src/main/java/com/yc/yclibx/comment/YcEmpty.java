@@ -1,5 +1,7 @@
 package com.yc.yclibx.comment;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 /**
@@ -48,6 +50,38 @@ public class YcEmpty {
         return isEmpty(data) ? dataIfEmpty : data;
     }
 
+    public static String getNoEmptyString(List data, int index) {
+        return getNoEmptyString(data, index, "");
+    }
+
+    /**
+     * 获取字符串(从集合里获取某个下标数据)
+     *
+     * @param data        数据
+     * @param dataIfEmpty null时返回的字符串
+     * @return
+     */
+    public static String getNoEmptyString(List data, int index, String dataIfEmpty) {
+        if (!isEmpty(data) && data.size() > index) {
+            return data.get(index).toString();
+        } else {
+            return dataIfEmpty;
+        }
+    }
+
+    public static <T> T getNoEmptyT(Class<T> classT, List data, int index) {
+        try {
+            if (!isEmpty(data) && data.size() > index) {
+                return (T) data.get(index);
+            } else {
+                Constructor<T> constructor = classT.getConstructor();
+                return constructor.newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * 获取字符串
      *

@@ -191,6 +191,18 @@ public class YcImgUtils {
     }
 
     @SuppressLint("CheckResult")
+    public static Disposable loadLocalImg(Context context, File imgFile, ImageView imageView) {
+        if (imgFile != null) {
+            YcLog.e("图片加载失败!图片的File为空");
+        }
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> GlideApp.with(context)
+                        .load(imgFile)
+                        .into(imageView));
+    }
+
+    @SuppressLint("CheckResult")
     public static Disposable loadResIdImg(Context context, int imgResId, ImageView imageView) {
         if (imgResId == 0) {
             YcLog.e("图片加载失败!图片资源id为空");
@@ -201,6 +213,7 @@ public class YcImgUtils {
                         .load(imgResId)
                         .into(imageView));
     }
+
     @SuppressLint("CheckResult")
     public static Disposable loadUrlImg(Context context, String imgUrl, ImageView imageView) {
         if (YcEmpty.isEmpty(imgUrl)) {
@@ -212,6 +225,7 @@ public class YcImgUtils {
                         .load(imgUrl)
                         .into(imageView));
     }
+
     /**
      * bitmap转成png格式保存
      *
