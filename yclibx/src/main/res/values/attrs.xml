@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--为CircleImageView设置的自定义属性-->
-    <declare-styleable name="yc_circle_image_view">
+    <declare-styleable name="YcCircleImageView">
+        <attr name="is_circle" format="boolean" />
+        <attr name="is_cover_src" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_top_left_radius" format="dimension" />
+        <attr name="corner_top_right_radius" format="dimension" />
+        <attr name="corner_bottom_left_radius" format="dimension" />
+        <attr name="corner_bottom_right_radius" format="dimension" />
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
-        <attr name="border_overlay" format="boolean" />
-        <attr name="civ_fill_color" format="color" />
+        <attr name="inner_border_width" format="dimension" />
+        <attr name="inner_border_color" format="color" />
+        <attr name="mask_color" format="color" />
     </declare-styleable>
     <!--为CircleImageView设置的自定义属性-->
     <declare-styleable name="yc_camera_sfv">
         <!--是否是后置摄像头-->
-        <attr name="is_back_Camera" format="boolean"/>
+        <attr name="is_back_Camera" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="YcEditTextNum">
+        <attr name="ycMinHeight" format="integer" />
+        <attr name="ycMaxLength" format="integer" />
+        <attr name="ycTextColor" format="color" />
+        <attr name="ycHint" format="string" />
+        <attr name="ycHintColor" format="color" />
+
+    </declare-styleable>
+    <declare-styleable name="FontTextView">
+        <attr name="fontTextViewFont" format="string|reference" />
     </declare-styleable>
 </resources>

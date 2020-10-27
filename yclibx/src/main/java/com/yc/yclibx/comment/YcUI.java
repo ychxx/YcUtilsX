@@ -1,12 +1,15 @@
 package com.yc.yclibx.comment;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 
 import com.yc.yclibx.YcUtilsInit;
@@ -35,6 +38,22 @@ public class YcUI {
 
         window.setAttributes(p);
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param window
+     */
+    public static void setStatusBarColor(Window window, @ColorInt int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // 设置状态栏底色白色
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(color);
+            // 设置状态栏字体黑色
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     /**

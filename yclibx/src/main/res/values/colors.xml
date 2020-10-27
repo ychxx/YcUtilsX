@@ -33,5 +33,9 @@
     <color name="colorLightABlue400">#00B0FF</color>
     <color name="colorLightABlue700">#0091FF</color>
 
-    <color name="gray">#373B3D</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorWhite">#ffffffff</color>
+
+    <color name="colorDefaultText1">#6C7282</color>
+    <color name="colorDefaultText2">#121412</color>
 </resources>

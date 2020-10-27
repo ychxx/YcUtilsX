@@ -1,4 +1,4 @@
-package com.yc.yclibx.comment;
+package com.yc.yclibx.release;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,18 +19,18 @@ import com.yc.yclibx.R;
  */
 public class YcReleaseLayoutUtils {
 
-    private final static String CONTAINER_TAG = "YC_CONTAINER_TAG";
+    protected final static String CONTAINER_TAG = "YC_CONTAINER_TAG";
 
     public static void replace(Activity activity, View releaseView) {
         replace(activity.findViewById(android.R.id.content), releaseView);
     }
 
     public static void replace(Activity activity, @LayoutRes int releaseLayoutRes) {
-        replace(activity.findViewById(android.R.id.content), YcResources.createView(activity, releaseLayoutRes));
+        replace(activity.findViewById(android.R.id.content), createView(activity, releaseLayoutRes));
     }
 
     public static void replace(View originalView, @LayoutRes int layoutRes) {
-        replace(originalView, YcResources.createView(originalView.getContext(), layoutRes));
+        replace(originalView, createView(originalView.getContext(), layoutRes));
     }
 
     /**
@@ -78,7 +78,7 @@ public class YcReleaseLayoutUtils {
             }
             showAndHideView(mContainer, releaseView);
         } else {
-            Log.e("YcReleaseLayoutUtils", "该View的getParent()获取到的不是ViewGroup");
+            Log.e("视图隐藏和显示", "该View的getParent()获取到的不是ViewGroup");
         }
     }
 
@@ -129,5 +129,8 @@ public class YcReleaseLayoutUtils {
         }
     }
 
+    public static View createView(Context context, @LayoutRes int layoutRes) {
+        return LayoutInflater.from(context).inflate(layoutRes, null, false);
+    }
 
 }

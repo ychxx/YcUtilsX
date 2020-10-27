@@ -72,17 +72,17 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 223 -> {
-                    if (YcResources.copyAssetsFolderToSD(
-                            this,
-                            "temp",
-                            YcFileUtils.SD_PATH + "/zhaopian"
-                        )
-                    ) {
-                        YcResources.sendRefreshToSysPhone(this, YcFileUtils.SD_PATH + "/zhaopian")
-                        Toast.makeText(this, "照片复制到手机里成功", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this, "照片复制到手机里失败", Toast.LENGTH_LONG).show()
-                    }
+//                    if (YcResources.copyAssetsFolderToSD(
+//                            this,
+//                            "temp",
+//                            YcFileUtils.SD_PATH + "/zhaopian"
+//                        )
+//                    ) {
+//                        YcResources.sendRefreshToSysPhone(this, YcFileUtils.SD_PATH + "/zhaopian")
+//                        Toast.makeText(this, "照片复制到手机里成功", Toast.LENGTH_LONG).show()
+//                    } else {
+//                        Toast.makeText(this, "照片复制到手机里失败", Toast.LENGTH_LONG).show()
+//                    }
                 }
                 111 -> {
                     startActivity(Intent(this, PageViewActivity::class.java))

@@ -82,6 +82,41 @@ public class YcEmpty {
             return null;
         }
     }
+
+    public static String getNoEmpty(String data, String defaultData, String unit) {
+        if (YcEmpty.isEmpty(data)) {
+            return defaultData;
+        } else {
+            return data + unit;
+        }
+    }
+
+    public static String getNoEmpty(String data, String defaultData, String prefix, String unit) {
+        if (YcEmpty.isEmpty(data)) {
+            return prefix + defaultData;
+        } else {
+            return prefix + data + unit;
+        }
+    }
+
+    public static String getNoEmptySplit(String data, String defaultData, String regex) {
+        return getNoEmptySplit(data, defaultData, "", "", regex);
+    }
+
+    public static String getNoEmptySplit(String data, String defaultData, String prefix, String unit, String regex) {
+        if (YcEmpty.isEmpty(data)) {
+            return prefix + defaultData;
+        } else {
+            try {
+                String result = data.split(regex)[0];
+                return prefix + result + unit;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return prefix + data + unit;
+            }
+        }
+    }
+
     /**
      * 获取字符串
      *
