@@ -76,11 +76,13 @@ public class YcCameraPhotoSfv extends SurfaceView implements YcOnDestroy {
             }
         });
 //        mSurfaceTexture = new SurfaceTexture(10);
-        setOnClickListener(v -> {
-            if (mCamera != null) {
-                mCamera.autoFocus(null);
-            }
-        });
+        setOnClickListener(v -> autoFocus(null));
+    }
+
+    public void autoFocus(Camera.AutoFocusCallback focusCallback) {
+        if (mCamera != null) {
+            mCamera.autoFocus(null);
+        }
     }
 
     /**
