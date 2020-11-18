@@ -20,8 +20,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 获取手机通讯录 -->
-<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
-<!--    <uses-permission android:name="android.permission.WRITE_CONTACTS" />-->
+    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <!--    <uses-permission android:name="android.permission.WRITE_CONTACTS" />-->
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -43,6 +43,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".bar.StateBarActivity"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".TestAdapterActivity"
             android:launchMode="singleTop" />
         <activity
@@ -62,6 +65,8 @@
         <activity android:name=".proxy.TestProxyActivity" />
         <activity android:name=".fragment.PageViewActivity" />
         <activity android:name=".mp.MPActivity" />
+        <activity android:name=".mp.MPBarActivity" />
+
     </application>
 
 </manifest>

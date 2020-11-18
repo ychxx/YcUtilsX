@@ -20,8 +20,10 @@ import com.yc.yclibx.comment.YcResources
 import com.yc.yclibx.file.YcFileUtils
 import com.yc.yclibx.file.YcImgUtils
 import com.yc.yclibx.permissions.YcUtilPermission
+import com.yc.ycutilsx.bar.StateBarActivity
 import com.yc.ycutilsx.fragment.PageViewActivity
 import com.yc.ycutilsx.mp.MPActivity
+import com.yc.ycutilsx.mp.MPBarActivity
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                         })
                 }
                 5 -> {
-
+                    startActivity(Intent(this, StateBarActivity::class.java))
                 }
                 223 -> {
 //                    if (YcResources.copyAssetsFolderToSD(
@@ -93,6 +95,9 @@ class MainActivity : AppCompatActivity() {
                 231 -> {
                     startActivity(Intent(this, MPActivity::class.java))
                 }
+                232 -> {
+                    startActivity(Intent(this, MPBarActivity::class.java))
+                }
                 else -> {
 
                 }
@@ -101,8 +106,9 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("复制小米手机图片到手机本地", 223))
         adapter.add(DataBean("查看联系人", 224))
         adapter.add(DataBean("viewPager动态增删", 111))
-        adapter.add(DataBean("MP图表", 231))
-
+        adapter.add(DataBean("MP折线图图表", 231))
+        adapter.add(DataBean("MP柱状图图表", 232))
+        adapter.add(DataBean("状态栏", 5))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

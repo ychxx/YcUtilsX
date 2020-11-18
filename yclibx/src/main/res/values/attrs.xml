@@ -32,4 +32,13 @@
     <declare-styleable name="FontTextView">
         <attr name="fontTextViewFont" format="string|reference" />
     </declare-styleable>
+    <declare-styleable name="ImageTextView">
+        <attr name="ImageTextView_textDefault" format="string" />
+        <attr name="ImageTextView_textDefaultColor" format="color" />
+        <attr name="ImageTextView_textDefaultSize" format="dimension" />
+        <attr name="ImageTextView_imageDefaultWidth" format="dimension" />
+        <attr name="ImageTextView_imageDefaultHeight" format="dimension" />
+        <attr name="ImageTextView_imageDefaultSrc" format="reference|color" />
+        <attr name="ImageTextView_marginTopBottom" format="dimension" />
+    </declare-styleable>
 </resources>

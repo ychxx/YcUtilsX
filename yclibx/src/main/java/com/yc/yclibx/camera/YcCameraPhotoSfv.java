@@ -81,7 +81,7 @@ public class YcCameraPhotoSfv extends SurfaceView implements YcOnDestroy {
 
     public void autoFocus(Camera.AutoFocusCallback focusCallback) {
         if (mCamera != null) {
-            mCamera.autoFocus(null);
+            mCamera.autoFocus(focusCallback);
         }
     }
 
@@ -140,7 +140,7 @@ public class YcCameraPhotoSfv extends SurfaceView implements YcOnDestroy {
         mCamera.autoFocus(new Camera.AutoFocusCallback() {
             @Override
             public void onAutoFocus(boolean success, Camera camera) {
-                Log.e("zome", "Zome:" + camera.getParameters().getZoom());
+//                Log.e("zome", "Zome:" + camera.getParameters().getZoom());
                 if (success) {
                     try {
                         mCameraState = YcCameraStateEnum.PLAYING;

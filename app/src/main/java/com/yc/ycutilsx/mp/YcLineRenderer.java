@@ -26,10 +26,6 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.yc.yclibx.comment.YcResources;
-import com.yc.yclibx.comment.YcTransform;
-import com.yc.yclibx.comment.YcUI;
-import com.yc.ycutilsx.R;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -38,7 +34,7 @@ import java.util.List;
 /**
  *
  */
-public class Rederer extends LineRadarRenderer {
+public class YcLineRenderer extends LineRadarRenderer {
 
     protected LineDataProvider mChart;
 
@@ -67,12 +63,12 @@ public class Rederer extends LineRadarRenderer {
     protected Path cubicPath = new Path();
     protected Path cubicFillPath = new Path();
 
-    public Rederer(LineChart lineChart) {
+    public YcLineRenderer(LineChart lineChart) {
         this(lineChart, lineChart.getAnimator(), lineChart.getViewPortHandler());
     }
 
-    public Rederer(LineDataProvider chart, ChartAnimator animator,
-                   ViewPortHandler viewPortHandler) {
+    public YcLineRenderer(LineDataProvider chart, ChartAnimator animator,
+                          ViewPortHandler viewPortHandler) {
         super(animator, viewPortHandler);
         mChart = chart;
 
@@ -620,7 +616,7 @@ public class Rederer extends LineRadarRenderer {
     /**
      * cache for the circle bitmaps of all datasets
      */
-    private HashMap<IDataSet, Rederer.DataSetImageCache> mImageCaches = new HashMap<>();
+    private HashMap<IDataSet, YcLineRenderer.DataSetImageCache> mImageCaches = new HashMap<>();
 
     /**
      * buffer for drawing the circles
@@ -660,12 +656,12 @@ public class Rederer extends LineRadarRenderer {
             boolean drawTransparentCircleHole = drawCircleHole &&
                     dataSet.getCircleHoleColor() == ColorTemplate.COLOR_NONE;
 
-            Rederer.DataSetImageCache imageCache;
+            YcLineRenderer.DataSetImageCache imageCache;
 
             if (mImageCaches.containsKey(dataSet)) {
                 imageCache = mImageCaches.get(dataSet);
             } else {
-                imageCache = new Rederer.DataSetImageCache();
+                imageCache = new YcLineRenderer.DataSetImageCache();
                 mImageCaches.put(dataSet, imageCache);
             }
 

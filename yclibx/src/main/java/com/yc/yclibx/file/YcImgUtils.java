@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
@@ -21,6 +24,8 @@ import com.yc.yclibx.R;
 import com.yc.yclibx.comment.YcEmpty;
 import com.yc.yclibx.comment.YcLog;
 import com.yc.yclibx.configure.GlideApp;
+import com.yc.yclibx.configure.GlideRequest;
+import com.yc.yclibx.configure.GlideRequests;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +33,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -109,11 +116,65 @@ public class YcImgUtils {
                 });
     }
 
+    public static Disposable loadNetImg(Context context, String imgUrl, HashMap<String, String> headerData, final ImgLoadCall imgLoadCall) {
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> {
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(new GlideUrl(imgUrl, () -> headerData))
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    imgLoadCall.call(resource);
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    super.onLoadFailed(errorDrawable);
+                                }
+                            });
+                });
+    }
+
+    public static Disposable loadNetImg(Context context, String imgUrl, Headers headers, final ImgLoadCall imgLoadCall) {
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> {
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(new GlideUrl(imgUrl, headers))
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    imgLoadCall.call(resource);
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    super.onLoadFailed(errorDrawable);
+                                }
+                            });
+                });
+    }
+
     /**
      * 加载网络图片
      */
     public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, IMG_FAIL_RELOAD_NUM);
+    }
+
+    public static Disposable loadNetImg(Context context, String imgUrl, final HashMap<String, String> headerData, ImageView imageView) {
+        return loadNetImg(context, imgUrl, imageView, () -> headerData, IMG_FAIL_RELOAD_NUM);
+    }
+
+    public static Disposable loadNetImg(Context context, String imgUrl, Headers headers, ImageView imageView) {
+        return loadNetImg(context, imgUrl, imageView, headers, IMG_FAIL_RELOAD_NUM);
+    }
+
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
+        return loadNetImg(context, imgUrl, imageView, null, reloadNum);
     }
 
     /**
@@ -122,14 +183,18 @@ public class YcImgUtils {
      * @param reloadNum 失败后再次加载的次数
      */
     @SuppressLint("CheckResult")
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, Headers headers, final int reloadNum) {
         //使用RxJava将线程切换到UI线程，防止部分手机 在加载图片失败后再次加载时出现线程相关异常
         return Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(along -> {
-                    GlideApp.with(context)
-                            .load(imgUrl)
-                            .error(IMG_FAIL_ID_RES)//失败显示的图片
+                    GlideRequest<Drawable> glideRequest;
+                    if (headers == null) {
+                        glideRequest = GlideApp.with(context).load(imgUrl);
+                    } else {
+                        glideRequest = GlideApp.with(context).load(new GlideUrl(imgUrl, headers));
+                    }
+                    glideRequest.error(IMG_FAIL_ID_RES)//失败显示的图片
                             .placeholder(IMG_LOADING_ID_RES)//加载中的图片
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                             .listener(new RequestListener<Drawable>() {//添加失败重新加载监听

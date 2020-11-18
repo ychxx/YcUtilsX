@@ -8,11 +8,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IFillFormatter;
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.FileUtils;
 import com.yc.yclibrary.base.YcAppCompatActivity;
 import com.yc.yclibx.comment.YcResources;
 import com.yc.ycutilsx.R;
@@ -39,7 +34,7 @@ public class MPActivity extends YcAppCompatActivity {
         mLineChart.setDrawGridBackground(false);
 
         mLineChart.setData(generateLineData());
-        mLineChart.setRenderer(new Rederer(mLineChart));
+        mLineChart.setRenderer(new YcLineRenderer(mLineChart));
     }
 
     List<Double> data = Arrays.asList(30.0, -3.0, 7.0, 66.0, 9.0, 36.0, 22.0, 13.0, 18.0, 4.0, 14.0,-30.0,-21.0);
