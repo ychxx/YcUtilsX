@@ -137,26 +137,6 @@ public class YcImgUtils {
                 });
     }
 
-    public static Disposable loadNetImg(Context context, String imgUrl, Headers headers, final ImgLoadCall imgLoadCall) {
-        return Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(along -> {
-                    GlideApp.with(context)
-                            .asBitmap()
-                            .load(new GlideUrl(imgUrl, headers))
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                    imgLoadCall.call(resource);
-                                }
-
-                                @Override
-                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                                    super.onLoadFailed(errorDrawable);
-                                }
-                            });
-                });
-    }
 
     /**
      * 加载网络图片
@@ -169,9 +149,6 @@ public class YcImgUtils {
         return loadNetImg(context, imgUrl, imageView, () -> headerData, IMG_FAIL_RELOAD_NUM);
     }
 
-    public static Disposable loadNetImg(Context context, String imgUrl, Headers headers, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, headers, IMG_FAIL_RELOAD_NUM);
-    }
 
     public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
         return loadNetImg(context, imgUrl, imageView, null, reloadNum);
