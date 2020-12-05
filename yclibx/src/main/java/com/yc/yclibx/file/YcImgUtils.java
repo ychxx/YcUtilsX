@@ -142,16 +142,19 @@ public class YcImgUtils {
      * 加载网络图片
      */
     public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null,true, IMG_FAIL_RELOAD_NUM);
     }
-
+    public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache,ImageView imageView) {
+        return loadNetImg(context, imgUrl, imageView, null,isCache, IMG_FAIL_RELOAD_NUM);
+    }
     public static Disposable loadNetImg(Context context, String imgUrl, final HashMap<String, String> headerData, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, () -> headerData, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, () -> headerData,true, IMG_FAIL_RELOAD_NUM);
     }
-
-
     public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
-        return loadNetImg(context, imgUrl, imageView, null, reloadNum);
+        return loadNetImg(context, imgUrl, imageView, null,true, reloadNum);
+    }
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, boolean isCache,final int reloadNum) {
+        return loadNetImg(context, imgUrl, imageView, null,isCache, reloadNum);
     }
 
     /**
@@ -160,7 +163,7 @@ public class YcImgUtils {
      * @param reloadNum 失败后再次加载的次数
      */
     @SuppressLint("CheckResult")
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, Headers headers, final int reloadNum) {
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, Headers headers, final boolean isCache, final int reloadNum) {
         //使用RxJava将线程切换到UI线程，防止部分手机 在加载图片失败后再次加载时出现线程相关异常
         return Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -171,9 +174,15 @@ public class YcImgUtils {
                     } else {
                         glideRequest = GlideApp.with(context).load(new GlideUrl(imgUrl, headers));
                     }
+                    DiskCacheStrategy strategy;
+                    if (isCache) {
+                        strategy = DiskCacheStrategy.AUTOMATIC;
+                    } else {
+                        strategy = DiskCacheStrategy.NONE;
+                    }
                     glideRequest.error(IMG_FAIL_ID_RES)//失败显示的图片
                             .placeholder(IMG_LOADING_ID_RES)//加载中的图片
-                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .diskCacheStrategy(strategy)
                             .listener(new RequestListener<Drawable>() {//添加失败重新加载监听
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

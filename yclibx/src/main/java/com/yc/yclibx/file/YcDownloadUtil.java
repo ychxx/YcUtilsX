@@ -19,6 +19,9 @@ import java.io.File;
  * 下载
  */
 public class YcDownloadUtil {
+    public static String urlToEncode(String url) {
+        return Uri.encode(url, ":._-$,;~()/+-=*?&");//转码防止中文下载地址导致无法下载
+    }
 
     public static void downloadApk(Context context, final String url, String apkPath, DownloadCall downloadCall) {
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -32,11 +35,10 @@ public class YcDownloadUtil {
     }
 
     public static void downloadApk(final String url, String savePath, ProgressDialog progressDialog, DownloadCall downloadCall) {
-        String urlEncode = Uri.encode(url, ":._-$,;~()/+-=*");//转码防止中文下载地址导致无法下载
+        String urlEncode = urlToEncode(url);
         org.xutils.http.RequestParams requestParams = new org.xutils.http.RequestParams(urlEncode);  // 下载地址
         requestParams.setSaveFilePath(savePath); // 为RequestParams设置文件下载后的保存路径
 //        requestParams.setAutoRename(false); // 下载完成后自动为文件命名
-
         x.http().get(requestParams, new Callback.ProgressCallback<File>() {
 
             @Override
@@ -103,29 +105,20 @@ public class YcDownloadUtil {
         });
     }
 
-    public static void downloadImg(final String url, DownloadCall downloadCall) {
+    public static void downloadImg(final String url, String savePath, DownloadCall downloadCall) {
         if (YcEmpty.isEmpty(url)) {
             YcLog.e("下载的图片地址为空");
             return;
         }
-        String[] img = url.split("/");
-        String imgName;
-        if (img == null || img.length <= 0) {
-            imgName = url;
-        } else {
-            imgName = img[img.length - 1];
-        }
         org.xutils.http.RequestParams requestParams = new org.xutils.http.RequestParams(url);  // 下载地址
-
-        final String imgPath = Environment.getExternalStorageDirectory() + "/YcUtils/" + File.separator + imgName;
-        File imgFile = new File(imgPath);
+        File imgFile = new File(savePath);
         if (imgFile.exists()) {
             downloadCall.onSuccess(imgFile);
             return;
         } else {
-            YcFileUtils.createFile(imgPath);
+            YcFileUtils.createFile(savePath);
         }
-        requestParams.setSaveFilePath(imgPath); // 为RequestParams设置文件下载后的保存路径
+        requestParams.setSaveFilePath(savePath); // 为RequestParams设置文件下载后的保存路径
 //        requestParams.setAutoRename(false); // 下载完成后自动为文件命名
         x.http().get(requestParams, new Callback.ProgressCallback<File>() {
 
@@ -138,14 +131,14 @@ public class YcDownloadUtil {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 YcLog.e("下载失败");
-                YcFileUtils.delFiel(imgPath);
+                YcFileUtils.delFiel(savePath);
                 downloadCall.onFail("下载失败");
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
                 YcLog.e("取消下载");
-                YcFileUtils.delFiel(imgPath);
+                YcFileUtils.delFiel(savePath);
                 downloadCall.onFail("下载被取消了");
             }
 

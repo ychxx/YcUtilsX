@@ -37,6 +37,8 @@ public class YcScreenShotUtil {
     private Disposable disposable;
     private Disposable disposable2;
     private ImageReader mImageReader;
+    private MediaProjection mediaProjection;
+    public boolean mIsGetPermission = false; //是否已经获取到权限（截图权限）
 
     public YcScreenShotUtil(Activity activity) {
         mActivity.add(activity);
@@ -48,6 +50,7 @@ public class YcScreenShotUtil {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void start() {
+        if (mIsGetPermission) return;
         if (mMediaProjectionManager == null) {
             mMediaProjectionManager = (MediaProjectionManager) mActivity.get(0).getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         }
@@ -61,15 +64,15 @@ public class YcScreenShotUtil {
                     if (ycForResultBean.getResultCode() == Activity.RESULT_OK) {
                         if (disposable2 != null)
                             disposable2.dispose();
-                        disposable2 = Observable.timer(1, TimeUnit.SECONDS)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<Long>() {
-                                    @Override
-                                    public void accept(Long aLong) throws Exception {
-                                        MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(ycForResultBean.getResultCode(), ycForResultBean.getData());
-                                        getBitmapData(mediaProjection);
-                                    }
-                                });
+//                        disposable2 = Observable.timer(1, TimeUnit.SECONDS)
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Consumer<Long>() {
+//                                    @Override
+//                                    public void accept(Long aLong) throws Exception {
+                                        mediaProjection = mMediaProjectionManager.getMediaProjection(ycForResultBean.getResultCode(), ycForResultBean.getData());
+                                        mIsGetPermission = true;
+//                                    }
+//                                });
                     } else {
                         mGetBitmapCall.getBitmap(null, false);
                     }
@@ -78,7 +81,8 @@ public class YcScreenShotUtil {
 
     @SuppressLint("WrongConstant")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void getBitmapData(MediaProjection mediaProjection) {
+    public void getBitmapData() {
+
         int windowWidth = YcUI.getScreenWidth();
         int windowHeight = YcUI.getScreenHeight();
         mImageReader = ImageReader.newInstance(windowWidth, windowHeight, 0x1, 2); //ImageFormat.RGB_565
@@ -99,7 +103,7 @@ public class YcScreenShotUtil {
                 int rowPadding = rowStride - pixelStride * width;
                 Bitmap bitmap = Bitmap.createBitmap(width + rowPadding / pixelStride, height, Bitmap.Config.ARGB_8888);
                 bitmap.copyPixelsFromBuffer(buffer);
-                bitmap = Bitmap.createBitmap(bitmap, 0,    0, width, height);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height);
                 image.close();
                 if (mVirtualDisplay == null) {
                     return;
@@ -116,7 +120,7 @@ public class YcScreenShotUtil {
     public void onDestroy() {
         if (disposable != null)
             disposable.dispose();
-        if(disposable2!=null){
+        if (disposable2 != null) {
             disposable2.dispose();
         }
     }

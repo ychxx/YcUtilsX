@@ -3,6 +3,7 @@ package com.yc.yclibx.comment;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.ImageFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
 import android.media.Image;
@@ -25,6 +26,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * 调用系统截屏
  */
+@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class YcScreenShot implements YcOnDestroy {
     MediaProjectionManager mMediaProjectionManager;
     private Stack<Activity> mActivity = new Stack<>();
@@ -33,6 +35,8 @@ public class YcScreenShot implements YcOnDestroy {
     private GetBitmapCall mGetBitmapCall;
     private Disposable disposable;
     private ImageReader mImageReader;
+    private MediaProjection mediaProjection;
+    public boolean mIsGetPermission = false; //是否已经获取到权限（截图权限）
 
     public YcScreenShot(Activity activity, YcManage ycManage) {
         mActivity.add(activity);
@@ -47,8 +51,9 @@ public class YcScreenShot implements YcOnDestroy {
         this.mGetBitmapCall = getBitmapCall;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     public void start() {
+        if (mIsGetPermission) return;
         if (mMediaProjectionManager == null) {
             mMediaProjectionManager = (MediaProjectionManager) mActivity.get(0).getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         }
@@ -60,15 +65,14 @@ public class YcScreenShot implements YcOnDestroy {
         }
         disposable = ycForResult.start(mMediaProjectionManager.createScreenCaptureIntent())
                 .subscribe(ycForResultBean -> {
-                    MediaProjection mediaProjection = mMediaProjectionManager.getMediaProjection(ycForResultBean.getResultCode(), ycForResultBean.getData());
-                    getBitmapData(mediaProjection);
+                    mediaProjection = mMediaProjectionManager.getMediaProjection(ycForResultBean.getResultCode(), ycForResultBean.getData());
+                    mIsGetPermission = true;
                 });
         if (mYcManage != null)
             mYcManage.add(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void getBitmapData(MediaProjection mediaProjection) {
+    public void getBitmapData() {
         int windowWidth = YcUI.getScreenWidth();
         int windowHeight = YcUI.getScreenHeight();
         mImageReader = ImageReader.newInstance(windowWidth, windowHeight, 0x1, 2); //ImageFormat.RGB_565
@@ -96,7 +100,7 @@ public class YcScreenShot implements YcOnDestroy {
                 mVirtualDisplay.release();
                 mVirtualDisplay = null;
                 if (mGetBitmapCall != null) {
-                    mGetBitmapCall.getBitmap(bitmap);
+                    mGetBitmapCall.getBitmap(bitmap,true);
                 }
             }
         }, null);
@@ -109,6 +113,6 @@ public class YcScreenShot implements YcOnDestroy {
     }
 
     public static interface GetBitmapCall {
-        void getBitmap(Bitmap bitmap);
+        void getBitmap(Bitmap bitmap, boolean isSuccess);
     }
 }

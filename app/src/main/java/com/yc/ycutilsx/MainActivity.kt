@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
                 5 -> {
                     startActivity(Intent(this, StateBarActivity::class.java))
                 }
+                6 -> {
+                    startActivity(Intent(this, ScreenShotActivity::class.java))
+                }
+
                 223 -> {
 //                    if (YcResources.copyAssetsFolderToSD(
 //                            this,
@@ -109,6 +113,7 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("MP折线图图表", 231))
         adapter.add(DataBean("MP柱状图图表", 232))
         adapter.add(DataBean("状态栏", 5))
+        adapter.add(DataBean("截屏", 6))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))
