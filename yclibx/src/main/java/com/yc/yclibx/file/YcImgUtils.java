@@ -65,7 +65,7 @@ public class YcImgUtils {
     public interface ImgLoadCall2 {
         void onLoadSuccess(Bitmap resource);
 
-        void onLoadFailed(Drawable errorDrawabl);
+        void onLoadFailed(Drawable errorDrawable);
     }
 
     /**
@@ -78,6 +78,34 @@ public class YcImgUtils {
                     GlideApp.with(context)
                             .asBitmap()
                             .load(imgUrl)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                    imgLoadCall.onLoadSuccess(resource);
+                                }
+
+                                @Override
+                                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                    imgLoadCall.onLoadFailed(errorDrawable);
+                                }
+                            });
+                });
+    }
+
+    public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache, final ImgLoadCall2 imgLoadCall) {
+        return Observable.just(1)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(along -> {
+                    DiskCacheStrategy strategy;
+                    if (isCache) {
+                        strategy = DiskCacheStrategy.AUTOMATIC;
+                    } else {
+                        strategy = DiskCacheStrategy.NONE;
+                    }
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(imgUrl)
+                            .diskCacheStrategy(strategy)
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -142,19 +170,23 @@ public class YcImgUtils {
      * 加载网络图片
      */
     public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null,true, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, true, IMG_FAIL_RELOAD_NUM);
     }
-    public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache,ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null,isCache, IMG_FAIL_RELOAD_NUM);
+
+    public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache, ImageView imageView) {
+        return loadNetImg(context, imgUrl, imageView, null, isCache, IMG_FAIL_RELOAD_NUM);
     }
+
     public static Disposable loadNetImg(Context context, String imgUrl, final HashMap<String, String> headerData, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, () -> headerData,true, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, () -> headerData, true, IMG_FAIL_RELOAD_NUM);
     }
+
     public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
-        return loadNetImg(context, imgUrl, imageView, null,true, reloadNum);
+        return loadNetImg(context, imgUrl, imageView, null, true, reloadNum);
     }
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, boolean isCache,final int reloadNum) {
-        return loadNetImg(context, imgUrl, imageView, null,isCache, reloadNum);
+
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, boolean isCache, final int reloadNum) {
+        return loadNetImg(context, imgUrl, imageView, null, isCache, reloadNum);
     }
 
     /**

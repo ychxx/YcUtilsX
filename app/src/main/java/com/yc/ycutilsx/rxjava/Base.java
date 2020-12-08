@@ -61,7 +61,7 @@ public class Base {
     /**
      * Observable创建方式2（原样发射）
      */
-    private void creat2() {
+    private void create2() {
         // just中传递的参数将直接在Observer的onNext()方法中接收到
         Observable<String> observable11 = Observable.just("Hello");
         // 发射多个 参数最多10个
@@ -81,7 +81,7 @@ public class Base {
     /**
      * Observable创建方式3（调用defer延迟创建(观察者订阅_被观察者_时才创建,且每次创建都是_新的_)）
      */
-    private void creat3() {
+    private void create3() {
         //defer() 只有观察者订阅的时候才会创建_新的_被观察者，所以每订阅一次就会打印一次，并且都是打印 i 最新的值。
         Observable<Integer> observable = Observable.defer(new Callable<ObservableSource<? extends Integer>>() {
             @Override
@@ -113,7 +113,7 @@ public class Base {
     /**
      * Observable创建方式4（调用time 延迟发射）
      */
-    private void creat4() {
+    private void create4() {
         //延迟2秒后，发射一个0L
         Observable<Long> observable1 = Observable.timer(2, TimeUnit.SECONDS);
         //每隔2000毫秒发射一个aLong，从0开始到无穷大。
@@ -129,7 +129,7 @@ public class Base {
     /**
      * Observable创建方式5（调用Range 发射特定整数序列）
      */
-    private void creat5() {
+    private void create5() {
         //从2开始发射3个数字（即发射2,3,4）
         Observable<Integer> observable1 = Observable.range(2, 3);
     }
