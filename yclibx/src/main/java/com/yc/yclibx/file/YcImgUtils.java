@@ -20,21 +20,17 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.yc.yclibx.R;
+import com.yc.yclibx.YcUtilsInit;
 import com.yc.yclibx.comment.YcEmpty;
 import com.yc.yclibx.comment.YcLog;
-import com.yc.yclibx.configure.GlideApp;
-import com.yc.yclibx.configure.GlideRequest;
-import com.yc.yclibx.configure.GlideRequests;
-
-import org.jetbrains.annotations.NotNull;
+import com.yc.yclibx.glide.GlideApp;
+import com.yc.yclibx.glide.GlideRequest;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,18 +40,7 @@ import io.reactivex.disposables.Disposable;
  *
  */
 public class YcImgUtils {
-    /**
-     * 加载网络图片失败时显示的图片
-     */
-    public static int IMG_FAIL_ID_RES = R.drawable.img_loading;
-    /**
-     * 加载网络图片加载时显示的图片
-     */
-    public static int IMG_LOADING_ID_RES = R.drawable.img_loading;
-    /**
-     * 加载网络图片失败重新加载的次数
-     */
-    public static int IMG_FAIL_RELOAD_NUM = 0;
+
 
 
     public interface ImgLoadCall {
@@ -170,15 +155,15 @@ public class YcImgUtils {
      * 加载网络图片
      */
     public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null, true, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, true, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
     }
 
     public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null, isCache, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, isCache, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
     }
 
     public static Disposable loadNetImg(Context context, String imgUrl, final HashMap<String, String> headerData, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, () -> headerData, true, IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, () -> headerData, true, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
     }
 
     public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
@@ -212,8 +197,8 @@ public class YcImgUtils {
                     } else {
                         strategy = DiskCacheStrategy.NONE;
                     }
-                    glideRequest.error(IMG_FAIL_ID_RES)//失败显示的图片
-                            .placeholder(IMG_LOADING_ID_RES)//加载中的图片
+                    glideRequest.error(YcUtilsInit.IMG_FAIL_ID_RES)//失败显示的图片
+                            .placeholder(YcUtilsInit.IMG_LOADING_ID_RES)//加载中的图片
                             .diskCacheStrategy(strategy)
                             .listener(new RequestListener<Drawable>() {//添加失败重新加载监听
                                 @Override
@@ -234,8 +219,8 @@ public class YcImgUtils {
 //              .asBitmap()//指定加载类型   git图会变成第一帧静态图
 //              .asDrawable()//指定加载类型
 //              .asFile()//指定加载类型
-//              .error(IMG_FAIL_ID_RES)//失败显示的图片
-//              .placeholder(IMG_LOADING_ID_RES)//加载中的图片
+//              .error(YcUtilsInit.IMG_FAIL_ID_RES)//失败显示的图片
+//              .placeholder(YcUtilsInit.IMG_LOADING_ID_RES)//加载中的图片
                 /*DiskCacheStrategy.ALL 使用DATA和RESOURCE缓存远程数据，仅使用RESOURCE来缓存本地数据。
                   DiskCacheStrategy.NONE 不使用磁盘缓存
                   DiskCacheStrategy.DATA 在资源解码前就将原始数据写入磁盘缓存

@@ -33,7 +33,7 @@ import com.yc.yclibx.R;
 /**
  *  //TODO 还未改造，有空再不坑，先用着
  */
-public class YcCircleImageView extends AppCompatImageView {
+public class YcCircleImageView  extends AppCompatImageView {
     private Context context;
 
     private boolean isCircle; // 是否显示为圆形，如果为圆形则设置的corner无效
