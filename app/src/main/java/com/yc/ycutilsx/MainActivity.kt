@@ -2,6 +2,7 @@ package com.yc.ycutilsx
 
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val prefs = getSharedPreferences("data",Context.MODE_PRIVATE)
         val adapter = object : YcRecyclerViewAdapter<DataBean>(this, R.layout.main_item) {
             override fun onUpdate(helper: YcAdapterHelper, item: DataBean, position: Int) {
                 helper.setText(R.id.mainItemBtn, item.content)
@@ -102,6 +104,9 @@ class MainActivity : AppCompatActivity() {
                 232 -> {
                     startActivity(Intent(this, MPBarActivity::class.java))
                 }
+                404 -> {
+//                    startActivity(Intent(this, TestActivity3::class.java))
+                }
                 else -> {
 
                 }
@@ -114,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("MP柱状图图表", 232))
         adapter.add(DataBean("状态栏", 5))
         adapter.add(DataBean("截屏", 6))
+        adapter.add(DataBean("测试", 404))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

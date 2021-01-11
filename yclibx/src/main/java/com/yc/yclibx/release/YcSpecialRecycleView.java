@@ -48,11 +48,7 @@ public abstract class YcSpecialRecycleView extends FrameLayout implements ISpeci
         mRecyclerView = new RecyclerView(context) {
             @Override
             public void setVisibility(int visibility) {
-                if (visibility == View.VISIBLE) {
-                    isReleaseViewShow = false;
-                } else {
-                    isReleaseViewShow = true;
-                }
+                isReleaseViewShow = visibility != View.VISIBLE;
                 super.setVisibility(visibility);
             }
         };
@@ -113,5 +109,4 @@ public abstract class YcSpecialRecycleView extends FrameLayout implements ISpeci
     public void setAdapter(@Nullable RecyclerView.Adapter adapter) {
         mRecyclerView.setAdapter(adapter);
     }
-
 }

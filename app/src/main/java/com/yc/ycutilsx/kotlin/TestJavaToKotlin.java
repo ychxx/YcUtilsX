@@ -18,6 +18,7 @@ public class TestJavaToKotlin {
     private List<String> listTest2 = Arrays.asList("33", "22");
     int a;
 
+
     private class TestConstructor {
         TestConstructor(String msg) {
             System.out.println(msg);
@@ -30,7 +31,6 @@ public class TestJavaToKotlin {
     }
 
     public TestJavaToKotlin(int param) {
-
         mParam = param;
         listTest.add("123");
         listTest.remove(1);

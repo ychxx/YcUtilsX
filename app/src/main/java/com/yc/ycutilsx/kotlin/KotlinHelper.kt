@@ -33,6 +33,7 @@ abstract class KotlinHelper {
     var var12 = String()
 
     var var14 = ""//类型推断
+
     //解除非空限制，改变量允许为空
     var var15: Int? = null
     //    var var16: String = null//正常复制null，编译会报错
@@ -40,6 +41,7 @@ abstract class KotlinHelper {
     abstract var var17: String//抽象变量
     lateinit var var13: String//lateinit var <标识符> : <类型>   //延迟初始化，类似java声明不初始化,且只能用于var
     val name: String by lazy { var13 + "" }//
+
     /**
      * 1.val 只读变量（value 的缩写），只能赋值一次，不能修改(类似Java中final修饰的变量)
      * 2.val 声明的变量不能进行重新赋值，也就是说不能调用 setter 函数，但可以重写getter函数（这点与java的final修饰不同）。
@@ -161,9 +163,15 @@ abstract class KotlinHelper {
         var boxIntList: List<Int> = listOf(1, 2) //装箱 Integer
         var unBoxArray: IntArray = intArrayOf(1, 2)//未装箱 int[]
         var unBoxArray2: IntArray = intArrayOf(1, 2)//未装箱 int[]
+        lateinit var mLateinitData: String
+
         @JvmStatic
         fun main(args: Array<String>) {
-            var a =cos(Math.PI / 180.0 * 120 / 2)
+            //延迟初始化
+            if (!::mLateinitData.isInitialized) {
+                mLateinitData = "123"
+            }
+            var a = cos(Math.PI / 180.0 * 120 / 2)
             print(a)
 //            var list = ArrayList<String>()
 //            var testArray = ArrayList<String>()

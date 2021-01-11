@@ -5,10 +5,17 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
+
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  *
@@ -33,26 +40,29 @@ public class YcImageLoad {
         }
         return requestOptions;
     }
+
     public static void load(Context context, File file, ImageView imageView) {
         GlideApp.with(context)
                 .asBitmap()
                 .load(file)
                 .into(imageView);
     }
-    public static void load(Context context, @DrawableRes int imgResId ,ImageView imageView) {
+
+    public static void load(Context context, @DrawableRes int imgResId, ImageView imageView) {
         GlideApp.with(context)
                 .asBitmap()
                 .load(imgResId)
                 .into(imageView);
     }
-    public static void load(Context context,String url, ImageView imageView) {
+
+    public static void load(Context context, String url, ImageView imageView) {
         GlideApp.with(context)
                 .asBitmap()
                 .load(url)
                 .into(imageView);
     }
 
-    public static void load(Context context,YcImageLoadOptions options) {
+    public static void load(Context context, YcImageLoadOptions options) {
         RequestOptions requestOptions = createRequestOptions(options);
 //        GlideApp.with(options.mContext)
 //                .asBitmap()
@@ -76,5 +86,27 @@ public class YcImageLoad {
 //                .setCacheDisk(true)
 //                .setSignature("")
 //                .load(context, new File(path), imageView);
+        List<Integer> list = Test.getBeans(s -> 10086);
+
+
+    }
+
+    public static void test2(Predicate<String> predicate) {
+//        predicate.
+    }
+
+    interface Test<T> {
+        T getTestBean(String s);
+
+        static <T> List<T> getBeans(Test<T> handle) {
+            List<T> list = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                T bean = handle.getTestBean(i + "asd");
+                if (bean != null) {
+                    list.add(bean);
+                }
+            }
+            return list;
+        }
     }
 }

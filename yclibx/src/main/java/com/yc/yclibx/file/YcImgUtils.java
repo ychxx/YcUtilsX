@@ -155,32 +155,27 @@ public class YcImgUtils {
      * 加载网络图片
      */
     public static Disposable loadNetImg(Context context, String imgUrl, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null, true, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, true);
     }
 
     public static Disposable loadNetImg(Context context, String imgUrl, boolean isCache, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, null, isCache, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, null, isCache);
     }
 
     public static Disposable loadNetImg(Context context, String imgUrl, final HashMap<String, String> headerData, ImageView imageView) {
-        return loadNetImg(context, imgUrl, imageView, () -> headerData, true, YcUtilsInit.IMG_FAIL_RELOAD_NUM);
+        return loadNetImg(context, imgUrl, imageView, () -> headerData, true);
     }
 
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, final int reloadNum) {
-        return loadNetImg(context, imgUrl, imageView, null, true, reloadNum);
-    }
-
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, boolean isCache, final int reloadNum) {
-        return loadNetImg(context, imgUrl, imageView, null, isCache, reloadNum);
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, boolean isCache) {
+        return loadNetImg(context, imgUrl, imageView, null, isCache);
     }
 
     /**
      * 加载网络图片
      *
-     * @param reloadNum 失败后再次加载的次数
      */
     @SuppressLint("CheckResult")
-    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, Headers headers, final boolean isCache, final int reloadNum) {
+    public static Disposable loadNetImg(final Context context, final String imgUrl, final ImageView imageView, Headers headers, final boolean isCache) {
         //使用RxJava将线程切换到UI线程，防止部分手机 在加载图片失败后再次加载时出现线程相关异常
         return Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -200,19 +195,6 @@ public class YcImgUtils {
                     glideRequest.error(YcUtilsInit.IMG_FAIL_ID_RES)//失败显示的图片
                             .placeholder(YcUtilsInit.IMG_LOADING_ID_RES)//加载中的图片
                             .diskCacheStrategy(strategy)
-                            .listener(new RequestListener<Drawable>() {//添加失败重新加载监听
-                                @Override
-                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    if (reloadNum > 0)
-                                        loadNetImg(context, imgUrl, imageView, reloadNum - 1);
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    return false;
-                                }
-                            })
                             .into(imageView);
                 });
 //              .asGif()//指定加载类型
