@@ -110,3 +110,21 @@ fun getResultMsg2(resultTest: ResultTestSealed2) = when (resultTest) {
     is Success2 -> resultTest.msg
     is Fail2 -> resultTest.error
 }
+
+
+fun use(block: (data: String) -> Unit) {
+
+}
+fun topFun(data: String) {}
+
+class Fun{
+    companion object{
+        fun fun2(data: String) {}
+    }
+    fun fun1(data: String) {}
+}
+fun main() {
+    use(::topFun)
+//    use(Fun::fun2)//改行是在新版是可以运行的
+//    use(Fun::fun1)
+}

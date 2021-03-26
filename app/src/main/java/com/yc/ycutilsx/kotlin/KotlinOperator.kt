@@ -80,6 +80,15 @@ class KotlinOperator {
                 result
             }
         }
+        var data2 = "1111"
+
+        when (data2) {
+            "-" ->{}
+             is String -> {}
+            else->{
+
+            }
+        }
         // result ="231"//在 when 主语中引入的变量的作用域仅限于 when 主体  即whenVar在when外面无法引用
     }
 
