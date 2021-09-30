@@ -65,7 +65,7 @@
             android:name=".ScreenShotActivity"
             android:launchMode="singleTop" />
 
-
+        <activity android:name=".multipleRecycle.TestMultipleRecycleActivity" />
         <activity android:name=".TestGetPhone2" />
         <activity android:name=".proxy.TestProxyActivity" />
         <activity android:name=".fragment.PageViewActivity" />

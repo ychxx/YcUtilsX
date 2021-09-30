@@ -25,6 +25,7 @@ import com.yc.ycutilsx.bar.StateBarActivity
 import com.yc.ycutilsx.fragment.PageViewActivity
 import com.yc.ycutilsx.mp.MPActivity
 import com.yc.ycutilsx.mp.MPBarActivity
+import com.yc.ycutilsx.multipleRecycle.TestMultipleRecycleActivity
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val prefs = getSharedPreferences("data",Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("data", Context.MODE_PRIVATE)
         val adapter = object : YcRecyclerViewAdapter<DataBean>(this, R.layout.main_item) {
             override fun onUpdate(helper: YcAdapterHelper, item: DataBean, position: Int) {
                 helper.setText(R.id.mainItemBtn, item.content)
@@ -77,6 +78,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 6 -> {
                     startActivity(Intent(this, ScreenShotActivity::class.java))
+                }
+                7 -> {
+                    startActivity(Intent(this, TestMultipleRecycleActivity::class.java))
                 }
 
                 223 -> {
@@ -120,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("状态栏", 5))
         adapter.add(DataBean("截屏", 6))
         adapter.add(DataBean("测试", 404))
+        adapter.add(DataBean("多布局", 7))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

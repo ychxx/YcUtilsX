@@ -14,7 +14,7 @@ public abstract class YcBaseMultipleRecycleViewAdapter extends YcBaseRecyclerAda
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(getLayoutResId(position));
+        return getLayoutResId(position);
     }
 
     public abstract int getLayoutResId(int position);
@@ -22,6 +22,7 @@ public abstract class YcBaseMultipleRecycleViewAdapter extends YcBaseRecyclerAda
     public abstract int getItemType(int position);
 
     public abstract int getItemIndex(int position);
+
     @SuppressWarnings("unchecked")
     public abstract <T extends Object> T getItem(int position);
 }
