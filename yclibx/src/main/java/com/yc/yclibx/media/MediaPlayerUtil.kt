@@ -1,13 +1,10 @@
-package com.hc.testaudio.util
+package com.yc.yclibx.media
 
-import android.content.Context
 import android.media.MediaPlayer
 import com.yc.yclibx.file.YcFileUtils
 import java.io.File
 import android.media.AudioManager
 import android.media.audiofx.Visualizer
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import com.yc.yclibx.comment.YcLog
 import java.io.FileInputStream
 import kotlin.math.atan2

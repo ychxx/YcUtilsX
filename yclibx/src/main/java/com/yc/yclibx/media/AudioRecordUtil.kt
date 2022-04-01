@@ -1,4 +1,4 @@
-package com.hc.testaudio.util
+package com.yc.yclibx.media
 
 import android.media.AudioFormat
 import android.media.AudioRecord
