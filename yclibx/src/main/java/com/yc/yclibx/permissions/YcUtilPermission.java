@@ -7,8 +7,8 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tbruyelle.rxpermissions3.Permission;
+import com.tbruyelle.rxpermissions3.RxPermissions;
 import com.yc.yclibx.exception.YcException;
 
 import java.lang.ref.WeakReference;
@@ -145,48 +145,45 @@ public class YcUtilPermission {
     public void start() {
         RxPermissions rxPermissions = new RxPermissions(mActivity.get());
         rxPermissions.requestEach(mRequestPermissions.toArray(new String[0]))
-                .subscribe(new Consumer<Permission>() {
-                    @Override
-                    public void accept(Permission permission) throws YcException {
-                        if (permission.granted) {
-                            // 用户已经同意该权限
-                            Log.i("YcUtilPermission", "" + permission.name + "用户已经同意该权限");
-                            mSuccessPermissions.add(permission.name);
-                        } else if (permission.shouldShowRequestPermissionRationale) {
-                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                            Log.i("YcUtilPermission", "" + permission.name + "用户拒绝了该权限，没有选中『不再询问』");
-                            mFailPermissions.add(permission.name);
+                .subscribe((io.reactivex.rxjava3.functions.Consumer<? super Permission>) permission -> {
+                    if (permission.granted) {
+                        // 用户已经同意该权限
+                        Log.i("YcUtilPermission", "" + permission.name + "用户已经同意该权限");
+                        mSuccessPermissions.add(permission.name);
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                        Log.i("YcUtilPermission", "" + permission.name + "用户拒绝了该权限，没有选中『不再询问』");
+                        mFailPermissions.add(permission.name);
+                    } else {
+                        // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
+                        Log.i("YcUtilPermission", "" + permission.name + "用户拒绝了该权限，并且选中『不再询问』");
+                        mNeverAskAgainPermissions.add(permission.name);
+                    }
+                    int failSize = mFailPermissions.size();
+                    int successSize = mSuccessPermissions.size();
+                    int requestSize = mRequestPermissions.size();
+                    int neverAskAgain = mNeverAskAgainPermissions.size();
+                    if (neverAskAgain + failSize + successSize >= requestSize) {
+                        if (neverAskAgain > 0) {
+                            if (mNeverAskAgainCall != null) {
+                                mNeverAskAgainCall.onCall();
+                            }
+                            if (mNeverAskAgainCall2 != null) {
+                                mNeverAskAgainCall2.onCall(mNeverAskAgainPermissions);
+                            }
+                        } else if (failSize > 0) {
+                            if (mFailCall != null) {
+                                mFailCall.onCall();
+                            }
+                            if (mFailCall2 != null) {
+                                mFailCall2.onCall(mFailPermissions);
+                            }
                         } else {
-                            // 用户拒绝了该权限，并且选中『不再询问』，提醒用户手动打开权限
-                            Log.i("YcUtilPermission", "" + permission.name + "用户拒绝了该权限，并且选中『不再询问』");
-                            mNeverAskAgainPermissions.add(permission.name);
-                        }
-                        int failSize = mFailPermissions.size();
-                        int successSize = mSuccessPermissions.size();
-                        int requestSize = mRequestPermissions.size();
-                        int neverAskAgain = mNeverAskAgainPermissions.size();
-                        if (neverAskAgain + failSize + successSize >= requestSize) {
-                            if (neverAskAgain > 0) {
-                                if (mNeverAskAgainCall != null) {
-                                    mNeverAskAgainCall.onCall();
-                                }
-                                if (mNeverAskAgainCall2 != null) {
-                                    mNeverAskAgainCall2.onCall(mNeverAskAgainPermissions);
-                                }
-                            } else if (failSize > 0) {
-                                if (mFailCall != null) {
-                                    mFailCall.onCall();
-                                }
-                                if (mFailCall2 != null) {
-                                    mFailCall2.onCall(mFailPermissions);
-                                }
-                            } else {
-                                if (mSuccessCall != null) {
-                                    mSuccessCall.onCall();
-                                }
-                                if (mSuccessCall2 != null) {
-                                    mSuccessCall2.onCall(mSuccessPermissions);
-                                }
+                            if (mSuccessCall != null) {
+                                mSuccessCall.onCall();
+                            }
+                            if (mSuccessCall2 != null) {
+                                mSuccessCall2.onCall(mSuccessPermissions);
                             }
                         }
                     }
