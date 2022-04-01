@@ -1,2 +1,2 @@
-include ':app', ':yclibx'
+include ':yclibx'
 rootProject.name='YcUtilsX'
