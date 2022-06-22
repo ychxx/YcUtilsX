@@ -82,7 +82,22 @@ class MainActivity : AppCompatActivity() {
                 7 -> {
                     startActivity(Intent(this, TestMultipleRecycleActivity::class.java))
                 }
-
+                8 -> {
+                    startActivity(Intent(this, TestBleActivity::class.java))
+                }
+                9 -> {
+                    YcUtilPermission.newInstance(this)
+                        .addPermissions(
+                            arrayOf(
+                                Manifest.permission.READ_PHONE_STATE,//手机信息
+                                Manifest.permission.CALL_PHONE,// 拨打电话的权限.
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,//存储卡读权限
+                                Manifest.permission.CAMERA,//相机权限
+                                Manifest.permission.RECORD_AUDIO,//录音权限
+                                Manifest.permission.ACCESS_COARSE_LOCATION,//定位权限
+                                Manifest.permission.ACCESS_FINE_LOCATION//定位权限)
+                            )).start()
+                }
                 223 -> {
 //                    if (YcResources.copyAssetsFolderToSD(
 //                            this,
@@ -125,6 +140,8 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("截屏", 6))
         adapter.add(DataBean("测试", 404))
         adapter.add(DataBean("多布局", 7))
+        adapter.add(DataBean("测试蓝牙", 8))
+        adapter.add(DataBean("测试权限", 9))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

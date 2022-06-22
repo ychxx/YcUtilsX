@@ -144,6 +144,7 @@ public class YcEditTextNum extends FrameLayout {
         mEditText.setClickable(isInputAble);
         mEditText.setFocusable(isInputAble);
         mEditText.setEnabled(isInputAble);
+        mEditText.setFocusableInTouchMode(isInputAble);
         if (isInputAble) {
             mLimitTv.setVisibility(VISIBLE);
             mNumTv.setVisibility(VISIBLE);

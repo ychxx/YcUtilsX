@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  */
 public class YcBluetoothThread {
-    public static UUID COMMON_UUID = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB");
+    public static UUID COMMON_UUID = UUID.fromString("0000FFE0-0000-1000-8000-00805F9B34FB");
     private BluetoothSocket mBtSocket = null;
 
     @SuppressLint("CheckResult")
@@ -38,8 +38,9 @@ public class YcBluetoothThread {
                     @Override
                     public ObservableSource<BluetoothSocket> apply(BluetoothDevice bluetoothDevice) throws Exception {
 //                        BluetoothSocket btSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(COMMON_UUID);
-                        COMMON_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+//                        COMMON_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 //                        COMMON_UUID = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb");
+                        COMMON_UUID = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
                         BluetoothSocket btSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(COMMON_UUID);
                         btSocket.connect();
                         return Observable.just(btSocket);
