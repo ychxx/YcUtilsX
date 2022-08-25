@@ -6,8 +6,10 @@ import android.content.res.Resources;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.yc.yclibx.comment.YcLog;
 import com.yc.yclibx.file.YcImgUtils;
+import com.yc.yclibx.glide.YcGlideModule;
 
 import org.xutils.x;
 
@@ -66,6 +68,10 @@ public class YcUtilsInit {
      */
     public static void setLoadImgDefaultLoading(@DrawableRes int imgIdRes) {
         IMG_LOADING_ID_RES = imgIdRes;
+    }
+
+    public static void setGlideTimeout(int timeout) {
+        YcGlideModule.TIMEOUT = timeout;
     }
 
     public static Application getApplication() {

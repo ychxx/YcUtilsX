@@ -20,6 +20,18 @@
       </map>
     </option>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/activity_main.xml" value="0.325" />
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/activity_test_adapter_item_1.xml" value="0.271875" />
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/activity_test_adapter_item_2.xml" value="0.271875" />
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/main_item.xml" value="0.271875" />
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/test_ble_ac.xml" value="0.271875" />
+        <entry key="..\:/workSpace/studioPrivate/YcUtilsX/app/src/main/res/layout/test_multiple_recycle.xml" value="0.271875" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">

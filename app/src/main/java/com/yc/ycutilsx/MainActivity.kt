@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.yclibx.adapter.YcAdapterHelper
@@ -30,13 +31,16 @@ import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_item.*
+import java.util.HashMap
 
 class MainActivity : AppCompatActivity() {
     class DataBean(var content: String, var maker: Int)
 
+    lateinit var mIv: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mIv = findViewById(R.id.appCompatImageView)
         val prefs = getSharedPreferences("data", Context.MODE_PRIVATE)
         val adapter = object : YcRecyclerViewAdapter<DataBean>(this, R.layout.main_item) {
             override fun onUpdate(helper: YcAdapterHelper, item: DataBean, position: Int) {
@@ -96,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                                 Manifest.permission.RECORD_AUDIO,//录音权限
                                 Manifest.permission.ACCESS_COARSE_LOCATION,//定位权限
                                 Manifest.permission.ACCESS_FINE_LOCATION//定位权限)
-                            )).start()
+                            )
+                        ).start()
                 }
                 223 -> {
 //                    if (YcResources.copyAssetsFolderToSD(
@@ -126,6 +131,12 @@ class MainActivity : AppCompatActivity() {
                 404 -> {
 //                    startActivity(Intent(this, TestActivity3::class.java))
                 }
+                10 -> {
+                    val Url = "http://10.55.21.116:8300//file/img/dd5f7f28-2068-42d4-8ad7-f9de85e01e4a.jpeg"
+                    val hash = HashMap<String, String>()
+                    hash.put("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNTYwNDc5MzM0MDQyMTY1MjUwIiwiZXhwIjoxNjYxNTA0ODk2LCJpYXQiOjE2NjE0MTg0OTZ9.PsOY5jtgXJm2_ntL7XX4WWDuFoApBZLI_x9_YSUSmBwLyfJ1Y7BQ17HjtkHlkDFoMbOup4FVNNLqquvjxJEgig");
+                    YcImgUtils.loadNetImg(this, Url, hash, mIv)
+                }
                 else -> {
 
                 }
@@ -142,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         adapter.add(DataBean("多布局", 7))
         adapter.add(DataBean("测试蓝牙", 8))
         adapter.add(DataBean("测试权限", 9))
+        adapter.add(DataBean("测试加载图片超时", 10))
 //        startActivity(Intent(this,TestAdapterActivity::class.java))
 //        adapter.add(DataBean("rxBus", 0))
 //        adapter.add(DataBean("Camera", 1))

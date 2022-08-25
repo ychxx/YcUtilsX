@@ -14,6 +14,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         YcUtilsInit.init(this);
+        YcUtilsInit.setGlideTimeout(10000);
     }
     @Override
     protected void attachBaseContext(Context base) {
