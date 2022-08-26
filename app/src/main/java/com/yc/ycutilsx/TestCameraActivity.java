@@ -1,6 +1,5 @@
 package com.yc.ycutilsx;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;

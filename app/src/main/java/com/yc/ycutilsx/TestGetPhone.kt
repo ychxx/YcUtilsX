@@ -5,23 +5,30 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yc.yclibx.adapter.YcAdapterHelper
 import com.yc.yclibx.adapter.YcRecyclerViewAdapter
 import com.yc.ycutilsx.bean.TestGetPhoneBean
-import kotlinx.android.synthetic.main.get_phone_activity.*
-import kotlinx.android.synthetic.main.get_phone_item.*
 
 
 /**
  *
  */
 class TestGetPhone : AppCompatActivity() {
-    var adapter: YcRecyclerViewAdapter<TestGetPhoneBean>? = null
+    private var adapter: YcRecyclerViewAdapter<TestGetPhoneBean>? = null
+    private lateinit var getPhoneItemName: TextView
+    private lateinit var getPhoneRv: RecyclerView
+    private lateinit var getPhoneGetTv: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.get_phone_activity)
+        getPhoneItemName = findViewById(R.id.getPhoneItemName)
+        getPhoneRv = findViewById(R.id.getPhoneRv)
+        getPhoneGetTv = findViewById(R.id.getPhoneGetTv)
         adapter = object : YcRecyclerViewAdapter<TestGetPhoneBean>(this, R.layout.get_phone_item) {
             override fun onUpdate(
                 helper: YcAdapterHelper,

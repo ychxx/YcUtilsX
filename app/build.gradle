@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -15,20 +12,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    productFlavors {
-        app {
-            versionCode 1
-            versionName "1.0"
-            flavorDimensions "default"
-            applicationId "com.yc.ycutilsx"
-        }
-        app2 {
-            versionCode 1
-            versionName "1.0"
-            flavorDimensions "default"
-            applicationId "com.yc.phone"
-        }
-    }
+//    productFlavors {
+//        app {
+//            versionCode 1
+//            versionName "1.0"
+//            flavorDimensions "default"
+//            applicationId "com.yc.ycutilsx"
+//        }
+//        app2 {
+//            versionCode 1
+//            versionName "1.0"
+//            flavorDimensions "default"
+//            applicationId "com.yc.phone"
+//        }
+//    }
     buildTypes {
         release {
             minifyEnabled false

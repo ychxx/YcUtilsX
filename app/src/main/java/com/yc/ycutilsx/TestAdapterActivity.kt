@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.*
 import com.yc.yclibx.adapter.YcAdapterHelper
 import com.yc.yclibx.adapter.YcRecyclerViewAdapter
 import com.yc.yclibx.adapter.YcRecycleViewItemDecoration
-import kotlinx.android.synthetic.main.activity_test_adapter.*
 
 /**
  *
@@ -27,10 +26,11 @@ class TestAdapterActivity : AppCompatActivity() {
         }
         for (index in 1..59 step 1)
             mAdapter.add("index")
+        val testAdapterRv = findViewById<RecyclerView>(R.id.testAdapterRv)
         testAdapterRv.adapter = mAdapter
         testAdapterRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         testAdapterRv.addItemDecoration(YcRecycleViewItemDecoration())
-
+        val testAdapterRv2 = findViewById<RecyclerView>(R.id.testAdapterRv2)
         val staggeredGridLayoutManager =
             StaggeredGridLayoutManager(11, StaggeredGridLayoutManager.VERTICAL)
         staggeredGridLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE

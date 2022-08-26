@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yc.yclibx.adapter.YcAdapterHelper
 import com.yc.yclibx.adapter.YcRecycleViewItemDecoration
 import com.yc.yclibx.adapter.YcRecyclerViewAdapter
@@ -29,8 +30,6 @@ import com.yc.ycutilsx.mp.MPBarActivity
 import com.yc.ycutilsx.multipleRecycle.TestMultipleRecycleActivity
 import com.yc.ycutilsx.proxy.TestProxyActivity
 import com.yc.ycutilsx.rxbus.TestRxBusActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_item.*
 import java.util.HashMap
 
 class MainActivity : AppCompatActivity() {
@@ -162,6 +161,7 @@ class MainActivity : AppCompatActivity() {
 //        adapter.add(DataBean("测试图片加载失败", 4))
 //        adapter.add(DataBean("复制assets资源到sd卡里", 5))
 //        adapter.add(DataBean("通知刷新", 6))
+        val testRecycleView = findViewById<RecyclerView>(R.id.testRecycleView)
         testRecycleView.adapter = adapter
         testRecycleView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
